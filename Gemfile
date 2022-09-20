@@ -46,6 +46,7 @@ end
 group :test do
   gem 'rspec-json_expectations'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'simplecov'
 end
 
 gem "active_model_serializers", "~> 0.10.12"
