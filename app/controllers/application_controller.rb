@@ -15,12 +15,9 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    User.find_by_id(session[:user_id])
+    @current_user ||= User.find_by_id(session[:user_id])
   end
 
-  def current_user!
-    User.find(session[:user_id])
-  end
 
   def authenticate_user
     render json: "Not authorized", status: :unauthorized unless current_user

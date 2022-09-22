@@ -11,17 +11,20 @@ class Api::SessionsController < ApplicationController
   end
 
   def show
-    user = current_user!
+    if current_user
+      user = current_user
     render json: user, status: :ok
-
+    else
+      authenticate_user
+      end
   end
 
   def destroy
-    if session[:user_id]
+    if current_user
       session.delete :user_id
       head :no_content
     else
-      render json: { errors: ["Unauthorized"] }, status: :unauthorized
+      authenticate_user
     end
   end
 

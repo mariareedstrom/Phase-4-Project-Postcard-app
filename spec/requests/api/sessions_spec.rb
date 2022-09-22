@@ -64,6 +64,19 @@ RSpec.describe "Api::Sessions", type: :request do
     let!(:user1){User.create!(name: 'Dave Davids', username: 'dave@email.com', password: "mypetsname")}
     let!(:user2){User.create!(name: 'Erik Eriksen', username: 'erik@email.com', password: "mymomsname")}
 
+    it "asserts that a current user is authenticated" do
+      post '/api/login', params: {username: user1.username, password: user1.password, name: user1.name}
+      get '/api/me'
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns a 401 unauthorized response when no user is authenticated" do
+      get "/api/me"
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
     it "returns the first user when the first user is logged in" do
       post '/api/login', params: {username: user1.username, password: user1.password, name: user1.name}
       get '/api/me'
@@ -85,14 +98,6 @@ RSpec.describe "Api::Sessions", type: :request do
                                               name: user2.name
                                             })
     end
-
-    it "returns unauthorized when no user is logged in" do
-      get '/api/me'
-
-      expect(response).to have_http_status(:not_found)
-    end
-
-
   end
 
 
