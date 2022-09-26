@@ -104,6 +104,18 @@ RSpec.describe "Api::Users", type: :request do
   end
 
 
+  describe "UPDATE /api/users/:id" do
+    let!(:user){User.create!(name: 'Alice Alisson', username: 'alice@email.com', password: "sosecure")}
+    let!(:update_params) { { name: "Alice Bobson" } }
+
+    it "updates the user with the matching id" do
+      expect(User.find(user.id).id).to eql(user.id)
+      patch "/api/users/#{user.id}", params: update_params
+      expect(User.find_by_name("Alice Bobson")).to eql(user)
+
+
+    end
+  end
 
   describe "DELETE /api/users/:id" do
     let!(:user){User.create!(name: 'Alice Alisson', username: 'alice@email.com', password: "sosecure")}

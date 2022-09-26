@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
 
     resources :postcards, only: [:index, :create, :show, :destroy]
-    resources :users, only: [:index, :show, :destroy ]
+    resources :users, only: [:index, :show, :destroy, :update ]
 
     post '/signup', to: 'users#create'
 
