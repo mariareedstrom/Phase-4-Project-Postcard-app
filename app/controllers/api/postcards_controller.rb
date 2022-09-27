@@ -24,7 +24,7 @@ class Api::PostcardsController < ApplicationController
   private
 
   def postcard_params
-    params.permit(:user_id, :greeting, :image_url)
+    params.permit(:user_id, :destination_id, :greeting, :image_url)
   end
 
 
