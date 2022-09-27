@@ -5,7 +5,8 @@ RSpec.describe "Api::Postcards", type: :request do
   describe "GET /api/postcards" do
     let!(:alice){User.create!(name: 'Alice Alisson', username: 'alice@email.com', password: "sosecure")}
     let!(:bob){User.create!(name: 'Bob Bobson', username: 'bob@email.com', password: "sosecure")}
-    let!(:card1){Postcard.create!(user: alice, greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here! xox ", image_url: "http://foo")}
+    let!(:oslo){Destination.create!(name: "Oslo")}
+    let!(:card1){Postcard.create!(user: alice, destination: oslo, greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here! xox ", image_url: "http://foo")}
 
     it "returns an array of postcards" do
       get '/api/postcards'
@@ -13,6 +14,7 @@ RSpec.describe "Api::Postcards", type: :request do
                                               {
                                                 id: card1.id,
                                                 user_id: alice.id,
+                                                destination_id: oslo.id,
                                                 greeting: card1.greeting,
                                                 image_url: card1.image_url
                                               }
@@ -26,8 +28,10 @@ RSpec.describe "Api::Postcards", type: :request do
   describe "POST /api/postcards" do
     context "with valid input" do
       let!(:bob){User.create!(name: 'Bob Bobson', username: 'bob@email.com', password: "sosecure")}
+      let!(:oslo){Destination.create!(name: "Oslo")}
       let!(:card_params){
         { user_id: bob.id,
+          destination_id: oslo.id,
           greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here!",
           image_url: "http://foo.com"
         }
@@ -43,6 +47,7 @@ RSpec.describe "Api::Postcards", type: :request do
         expect(response.body).to include_json({
                                                 id: a_kind_of(Integer),
                                                 user_id: bob.id,
+                                                destination_id: oslo.id,
                                                 greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here!",
                                                 image_url: "http://foo.com"
                                               })
@@ -59,7 +64,9 @@ RSpec.describe "Api::Postcards", type: :request do
 
   describe "GET /api/postcards/:id"  do
     let!(:user_params){User.create!(name: 'Alice Alisson', username: 'alice@email.com', password: "sosecure")}
+    let!(:oslo){Destination.create!(name: "Oslo")}
     let!(:card_params){Postcard.create!( user_id: user_params.id,
+                                         destination_id: oslo.id,
                                      greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here!",
                                      image_url: "http://foo.com"
                                    ) }
@@ -76,9 +83,11 @@ RSpec.describe "Api::Postcards", type: :request do
 
   describe "DELETE /api/postcards/:id" do
     let!(:user){User.create!(name: 'Bob Bobson', username: 'bob@email.com', password: "sosecure")}
+    let!(:destination){Destination.create!(name: "Oslo")}
     let!(:card){Postcard.create!(user_id: user.id,
-                                       greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here!",
-                                       image_url: "http://foo.com"
+                                      destination_id: destination.id,
+                                      greeting: "Hi there, We're on vacation in Rome! The food and weather is great. Wish you were here!",
+                                      image_url: "http://foo.com"
     )}
 
     it "deletes the postcard with the matching id" do
