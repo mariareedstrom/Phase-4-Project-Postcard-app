@@ -1,23 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router } from 'react-router-dom'
+import LoggedIn from "./LoggedIn";
+import LoggedOut from "./LoggedOut";
+
+
+
+
 
 function App() {
+    const [currentUser, setCurrentUser] = useState(null)
+    const [authenticated, setAuthenticated] = useState(false)
+
+    useEffect(() => {
+        fetch('/api/me')
+            .then((res) => {
+                if (res.ok) {
+                    res.json().then((user) => {
+                        setCurrentUser(user)
+                        setAuthenticated(true)
+                    })
+                }else {
+                    setAuthenticated(true)
+                }
+            })
+    }, [])
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <h1>Postcard App</h1>
+
+      <Router>
+          { currentUser? (
+              <LoggedIn
+                  setCurrentUser ={setCurrentUser}
+                  currentUser = {currentUser}
+              />
+          ) : (
+              <LoggedOut
+                  setCurrentUser = {setCurrentUser}
+              />
+          )}
+      </Router>
+
     </div>
   );
 }
