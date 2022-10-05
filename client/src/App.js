@@ -27,7 +27,9 @@ function App() {
             })
     }, [])
 
-
+if(!authenticated){
+    return <div></div>
+}
 
   return (
     <div >

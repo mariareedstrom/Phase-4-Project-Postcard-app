@@ -1,9 +1,20 @@
 import React from 'react';
 
-function LoggedIn() {
+function LoggedIn({currentUser, setCurrentUser}) {
+
+    function handleLogout(){
+        setCurrentUser(null)
+        fetch('/api/logout', {
+            method: "DELETE"
+        })
+    }
+
     return (
         <div>
-            <h3>Logged in version</h3>
+            <h3>Welcome {currentUser.name}!</h3>
+            <p>
+                <button onClick={handleLogout}>Logout</button>
+            </p>
         </div>
     );
 }
