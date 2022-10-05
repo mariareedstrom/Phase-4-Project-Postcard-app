@@ -1,4 +1,5 @@
 import React from 'react';
+import PostcardShow from "./PostcardShow";
 
 function LoggedIn({currentUser, setCurrentUser}) {
 
@@ -15,6 +16,7 @@ function LoggedIn({currentUser, setCurrentUser}) {
             <p>
                 <button onClick={handleLogout}>Logout</button>
             </p>
+            <PostcardShow/>
         </div>
     );
 }

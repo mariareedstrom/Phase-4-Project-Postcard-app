@@ -2,8 +2,8 @@ import './App.css';
 import React from "react";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router } from 'react-router-dom'
-import LoggedIn from "./LoggedIn";
-import LoggedOut from "./LoggedOut";
+import LoggedIn from "./Pages/LoggedIn";
+import LoggedOut from "./Pages/LoggedOut";
 
 
 
