@@ -2,7 +2,7 @@ class Api::PostcardsController < ApplicationController
 
   def index
     postcards = Postcard.all
-    render json: postcards, status: :ok
+    render json: postcards, include: [:user, :destination], status: :ok
   end
 
   def create
@@ -12,7 +12,7 @@ class Api::PostcardsController < ApplicationController
 
   def show
     postcard = Postcard.find(params[:id])
-    render json: postcard, status: :ok
+    render json: postcard, include: [:user, :destination], status: :ok
   end
 
   def destroy
