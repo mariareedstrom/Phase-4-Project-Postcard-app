@@ -25,4 +25,4 @@ p2 = Postcard.create(user_id: erik.id, destination_id: malaga.id, greeting:"Hola
 p3 = Postcard.create(user_id: maria.id, destination_id: tampa.id, greeting: "Hey, Just wanted to send you a quick note from Tampa, FL! Beaches are beautiful, the seafood is delicious, and the theme parks are just an hour away. Having a blast! Going to the Zoo today. Take care! Maria xox ", image_url: "http:/tpafl.com")
 p3 = Postcard.create(user_id: erik.id, destination_id: santaBarbara.id, greeting: "Hello! This time I'm in the American Riviera, enjoying the beautiful Santa Barbara. Have done a great wine tour and explored the coast by boat. Love it here! Erik", image_url: "http:/sbca.com")
 
-puts "🌱 Done Seeding 🌱"
+puts "🌱Done Seeding 🌱"
