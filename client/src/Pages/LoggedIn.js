@@ -1,5 +1,7 @@
-import React from 'react';
-import PostcardShow from "./PostcardShow";
+import React, { useEffect, useState } from 'react';
+import PostcardIndex from "./PostcardIndex";
+import Navbar from "../Components/Navbar";
+
 
 function LoggedIn({currentUser, setCurrentUser}) {
 
@@ -12,11 +14,12 @@ function LoggedIn({currentUser, setCurrentUser}) {
 
     return (
         <div>
+            <Navbar/>
             <h3>Welcome {currentUser.name}!</h3>
+            <PostcardIndex currentUser={currentUser}/>
             <p>
                 <button onClick={handleLogout}>Logout</button>
             </p>
-            <PostcardShow/>
         </div>
     );
 }

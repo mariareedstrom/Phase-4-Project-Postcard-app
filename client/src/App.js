@@ -1,7 +1,8 @@
 import './App.css';
 import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
+import Header from "./Components/Header";
 import LoggedIn from "./Pages/LoggedIn";
 import LoggedOut from "./Pages/LoggedOut";
 
@@ -33,8 +34,7 @@ if(!authenticated){
 
   return (
     <div >
-      <h1>Postcard App</h1>
-
+      <Header/>
       <Router>
           { currentUser? (
               <LoggedIn
