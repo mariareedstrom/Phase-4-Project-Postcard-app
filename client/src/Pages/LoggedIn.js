@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PostcardIndex from "./PostcardIndex";
 import Navbar from "../Components/Navbar";
+import Header from "../Components/Header";
 
 
 function LoggedIn({currentUser, setCurrentUser}) {
 
-    function handleLogout(){
-        setCurrentUser(null)
-        fetch('/api/logout', {
-            method: "DELETE"
-        })
-    }
+
 
     return (
         <div>
-            <Navbar/>
+            <Header currentUser={currentUser} setCurrentUser={setCurrentUser}/>
             <h3>Welcome {currentUser.name}!</h3>
             <PostcardIndex currentUser={currentUser}/>
-            <p>
-                <button onClick={handleLogout}>Logout</button>
-            </p>
         </div>
     );
 }

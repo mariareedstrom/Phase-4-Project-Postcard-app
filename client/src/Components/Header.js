@@ -1,13 +1,31 @@
 import React from 'react';
-import { Route, Link } from "react-router-dom";
-// import { AppBar, Toolbar, Box } from "@mui/material"
+import { AppBar, Box, Toolbar, Typography, Button, Avatar } from "@mui/material";
 
-function Header() {
+
+function Header({currentUser, setCurrentUser}) {
+
+    function handleLogout(){
+        setCurrentUser(null)
+        fetch('/api/logout', {
+            method: "DELETE"
+        })
+    }
+
     return (
-        <div>
-            <img src="/postcard-logo.png" alt="logo" />
-            <h4 className="title">Greetings friends </h4>
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                        <img src='/postcard-logo.png' alt="logo"/>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Greetings Friends
+                    </Typography>
+
+                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                        <Avatar alt={`${currentUser.name}`} src="/avatar.png" />
+
+                </Toolbar>
+            </AppBar>
+        </Box>
 
     );
 }

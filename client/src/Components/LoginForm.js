@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 
 
@@ -74,7 +75,10 @@ function LoginForm({ setCurrentUser }) {
                         Sign In
                 </Button>
                 <Typography> Don't have an account?
-                    <Link href="#">Sign Up</Link>
+                    <Link component={RouterLink}
+                          to="/api/signup"
+                    >Sign Up
+                    </Link>
                 </Typography>
             </Paper>
         </Grid>

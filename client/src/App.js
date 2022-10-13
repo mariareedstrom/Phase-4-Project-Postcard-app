@@ -34,7 +34,6 @@ if(!authenticated){
 
   return (
     <div >
-      <Header/>
       <Router>
           { currentUser? (
               <LoggedIn
