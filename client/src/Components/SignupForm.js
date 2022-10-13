@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {Avatar, Button, Grid, Paper, TextField, Typography, Link} from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom'
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 
 
@@ -84,7 +85,10 @@ function SignupForm({setCurrentUser}) {
                     Sign Up!
                 </Button>
                 <Typography> Already have an account?
-                    <Link href="#">Log In</Link>
+                    <Link component={RouterLink}
+                          to="/"
+                    >Log In
+                    </Link>
                 </Typography>
             </Paper>
         </Grid>
@@ -92,47 +96,7 @@ function SignupForm({setCurrentUser}) {
 
     );
 
-        // <div>
-        //     <h3>Welcome New User!</h3>
-        //     <h2>Create your account here</h2>
-        //
-        //     <form onSubmit={handleSubmit}>
-        //         <p>
-        //             <label>name </label>
-        //             <input
-        //                 type="text"
-        //                 name="name"
-        //                 value={formData.name}
-        //                 onChange={(e) => handleChange(e)}
-        //             />
-        //         </p>
-        //         <p>
-        //             <label>username</label>
-        //             <input
-        //                 type="text"
-        //                 name="username"
-        //                 value={formData.username}
-        //                 onChange={(e) => handleChange(e)}
-        //             />
-        //         </p>
-        //         <p>
-        //             <label>password</label>
-        //             <input
-        //                 type="password"
-        //                 name="password"
-        //                 value={formData.password}
-        //                 onChange={(e) => handleChange(e)}
-        //             />
-        //         </p>
-        //         <p>
-        //             <button type="submit">Sign Me Up</button>
-        //         </p>
-        //         <p>
-        //         <h4>Already have an account? </h4>
-        //             <Link to='/'>Log In</Link>
-        //         </p>
-        //     </form>
-        // </div>
+
 }
 
 export default SignupForm;
