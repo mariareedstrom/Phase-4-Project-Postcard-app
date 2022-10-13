@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PostCard from "../Components/PostCard";
+import Grid from "@mui/material/Grid";
 
 
 function PostcardIndex({currentUser}) {
@@ -14,20 +15,20 @@ function PostcardIndex({currentUser}) {
     }, [])
 
 
-    console.log(postcards)
-    console.log(currentUser)
 
     return (
-        <div>
-            <ul>
+
+        <>
+            <Grid container spacing={4} sx={{ padding: "0 24px 0 24px" }}>
                 {postcards.map((postcard) => (
-                    <li key={postcard.id}>
-                        <PostCard postcard={postcard}/>
-                    </li>
-                    )
-                )}
-            </ul>
-        </div>
+
+                    <Grid item display="flex" key={postcard.id}>
+                        <PostCard postcard={postcard} />
+                    </Grid>
+                ))}
+            </Grid>
+        </>
+
     );
 }
 
