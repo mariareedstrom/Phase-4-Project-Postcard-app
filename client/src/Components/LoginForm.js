@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import {Link} from "react-router-dom";
+import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from "@mui/material";
+import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
+
+
+
+
 
 
 function LoginForm({ setCurrentUser }) {
@@ -34,39 +39,50 @@ function LoginForm({ setCurrentUser }) {
             })
 
     }
-
+    const paperStyle={padding :20, height:"70vp", width: 280, margin: "20px auto"}
+    const buttonStyle={margin: "8px, 0"}
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <h2>LogIn</h2>
-                <p>
-                <label>Username</label>
-                    <input
-                        type="text"
-                        name="username"
-                        value = {formData.username}
-                        onChange = {(e) => handleChange(e)}
-                    />
-                </p>
-                <p>
-                <label>Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value = {formData.password}
-                        onChange = {(e) => handleChange(e)}
-                    />
-                </p>
-                <p>
-                    <button type="submit">Submit</button>
-                </p>
-                <p>
-                    <Link to="/api/signup">Create Account Here</Link>
-                </p>
-            </form>
-        </div>
+
+        <Grid>
+            <Paper elevation={10}
+                   style={paperStyle}
+                   component="form"
+                   onSubmit={handleSubmit}>
+                <Grid align="center">
+                <Avatar ><VpnKeyOutlinedIcon/>></Avatar>
+                <h2>Sign In</h2>
+                </Grid>
+                <TextField onChange={(e) => handleChange(e)}
+                           label="Username"
+                           name="username"
+                           value={formData.username}
+                           placeholder="enter username"
+                           fullWidth required/>
+                <TextField onChange={(e) => handleChange(e)}
+                           label="Password"
+                           name="password"
+                           value={formData.password}
+                           placeholder="enter password"
+                           type="password"
+                           fullWidth required/>
+                <Button type="submit"
+                        color="primary"
+                        style={buttonStyle}
+                        fullWidth required
+                        variant="contained">
+                        Sign In
+                </Button>
+                <Typography> Don't have an account?
+                    <Link href="#">Sign Up</Link>
+                </Typography>
+            </Paper>
+        </Grid>
+
+
     );
+
+
 }
 
 export default LoginForm;

@@ -10,8 +10,6 @@ function LoggedOut({ setCurrentUser }) {
             <Routes>
                 <Route exact path = "/" element={ <LoginForm setCurrentUser = {setCurrentUser} /> }/>
                 <Route exact path = "/api/signup" element={ <SignupForm setCurrentUser = {setCurrentUser} /> }/>
-
-
             </Routes>
         </div>
     );
