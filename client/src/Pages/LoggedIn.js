@@ -10,7 +10,7 @@ function LoggedIn({currentUser, setCurrentUser}) {
 
     return (
         <div>
-            <h3>Welcome {currentUser.name}!</h3>
+            <h3>Greetings {currentUser.name}!</h3>
             <PostcardIndex currentUser={currentUser}/>
         </div>
     );
