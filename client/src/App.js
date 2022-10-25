@@ -1,10 +1,12 @@
 import './App.css';
 import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from "./Components/Header";
 import LoggedIn from "./Pages/LoggedIn";
 import LoggedOut from "./Pages/LoggedOut";
+import UserShow from "./Pages/UserShow";
+import SignupForm from "./Components/SignupForm";
 
 
 
@@ -32,22 +34,34 @@ if(!authenticated){
     return <div></div>
 }
 
-  return (
-    <div >
-      <Router>
-          { currentUser? (
-              <LoggedIn
-                  setCurrentUser ={setCurrentUser}
-                  currentUser = {currentUser}
-              />
-          ) : (
-              <LoggedOut
-                  setCurrentUser = {setCurrentUser}
-              />
-          )}
-      </Router>
+    function handleLogout(){
+        setCurrentUser(null)
+        fetch('/api/logout', {
+            method: "DELETE"
+        })
+    }
 
-    </div>
+  return (
+      <main className="App" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
+          {currentUser? <Header currentUser={currentUser} handleLogout={handleLogout} /> : null }
+          <Routes>
+              <Route path="/" element=
+                  { currentUser? (
+                      <LoggedIn
+                          setCurrentUser ={setCurrentUser}
+                          currentUser = {currentUser}
+                      />
+                  ) : (
+                      <LoggedOut
+                          setCurrentUser = {setCurrentUser}
+                      />
+                  )}
+                  />
+              <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
+              <Route path="/api/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
+          </Routes>
+
+    </main>
   );
 }
 
