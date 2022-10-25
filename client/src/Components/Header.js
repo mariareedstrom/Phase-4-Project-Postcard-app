@@ -15,7 +15,7 @@ function Header({currentUser, setCurrentUser}) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                        <img src='/postcard-logo.png' alt="logo"/>
+                        {/*<img src='/postcard-logo.png' alt="logo"/>*/}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Greetings Friends
                     </Typography>
