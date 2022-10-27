@@ -15,11 +15,13 @@ import CommentIcon from '@mui/icons-material/Comment';
 
 
 
-function PostCard({postcard}) {
+function PostCard({postcard, currentUser}) {
     const { user, image_url, greeting, destination } = postcard
     const {name} = postcard.user
 
-
+function showIfUser(){
+console.log(currentUser)
+}
 
 
     return (

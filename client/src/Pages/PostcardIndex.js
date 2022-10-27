@@ -20,6 +20,7 @@ function PostcardIndex({currentUser}) {
 
     }, [])
 
+    // setDestinations(postcards.map(card => card.destination))
 
     return (
 
@@ -32,7 +33,7 @@ function PostcardIndex({currentUser}) {
                 {postcards.map((postcard) => (
 
                     <Grid item display="flex" key={postcard.id}>
-                        <PostCard postcard={postcard} />
+                        <PostCard postcard={postcard} currentUser={currentUser} />
                     </Grid>
                 ))}
             </Grid>

@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react";
 import { useState, useEffect } from "react";
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import Header from "./Components/Header";
 import LoggedIn from "./Pages/LoggedIn";
 import LoggedOut from "./Pages/LoggedOut";
@@ -16,6 +16,8 @@ import UserEdit from "./Pages/UserEdit";
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
     const [authenticated, setAuthenticated] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch('/api/me')
@@ -37,9 +39,9 @@ if(!authenticated){
 
     function handleLogout(){
         setCurrentUser(null)
-        fetch('/api/logout', {
-            method: "DELETE"
-        })
+        fetch('/api/logout', {method: "DELETE"})
+        navigate(`/`)
+
     }
 
   return (

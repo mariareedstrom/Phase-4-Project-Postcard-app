@@ -6,11 +6,9 @@ import PostCard from "../Components/PostCard";
 
 function UserShow({currentUser}) {
     const {name, postcards, id, username } = currentUser
-
+    const destinations = postcards.map(card => card.destination)
 
     const navigate = useNavigate()
-
-
 
 
     return (
@@ -39,10 +37,10 @@ function UserShow({currentUser}) {
 
                     <div style={{display:"flex", justifyContent:"space-between", width:"108%"}}>
                         <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
-                            2 Postcards
+                            {postcards.length} Postcards
                         </Typography>
                         <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
-                            4 Destinations
+                            {destinations.length} Destinations
                         </Typography>
                         <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
                             34 Comments

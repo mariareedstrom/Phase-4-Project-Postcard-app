@@ -1,4 +1,6 @@
 class Api::PostcardsController < ApplicationController
+  before_action :set_postcard, only: [:show, :update, :destroy, :index]
+  before_action :is_authorized, only: [:update, :destroy]
 
   def index
     postcards = Postcard.all
@@ -11,13 +13,15 @@ class Api::PostcardsController < ApplicationController
   end
 
   def show
-    postcard = Postcard.find(params[:id])
-    render json: postcard, include: [:user, :destination], status: :ok
+    render json: @postcard, include: [:user, :destination], status: :ok
+  end
+
+  def update
+    @postcard.update(postcard_params)
   end
 
   def destroy
-    postcard = Postcard.find(params[:id])
-    postcard.destroy
+    @postcard.destroy
     head :no_content
   end
 
@@ -27,5 +31,14 @@ class Api::PostcardsController < ApplicationController
     params.permit(:user_id, :destination_id, :greeting, :image_url)
   end
 
+  def set_postcard
+    @postcard = Postcard.find_by(id: params[:id])
+  end
+
+
+  def is_authorized
+    permitted = current_user.admin? || @postcard.user == current_user
+    render json: "Accessibility is not permitted", status: :forbidden unless permitted
+  end
 
 end
