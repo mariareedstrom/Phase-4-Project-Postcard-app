@@ -7,6 +7,7 @@ import LoggedIn from "./Pages/LoggedIn";
 import LoggedOut from "./Pages/LoggedOut";
 import UserShow from "./Pages/UserShow";
 import SignupForm from "./Components/SignupForm";
+import UserEdit from "./Pages/UserEdit";
 
 
 
@@ -58,7 +59,8 @@ if(!authenticated){
                   )}
                   />
               <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
-              <Route path="/api/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
+              <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
+              <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
           </Routes>
 
     </main>

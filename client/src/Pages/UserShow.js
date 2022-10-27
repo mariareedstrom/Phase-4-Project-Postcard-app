@@ -1,17 +1,17 @@
-import React from 'react';
-import Header from "../Components/Header";
-import {Box, Typography, Button} from "@mui/material";
-import DestinationSelector from "../Components/DestinationSelector";
+import React, {useEffect, useState} from 'react';
+import {useNavigate, Link} from "react-router-dom";
+import {Box, Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import PostCard from "../Components/PostCard";
 
 function UserShow({currentUser}) {
-    const {name, postcards } = currentUser
+    const {name, postcards, id, username } = currentUser
 
 
-    function handleEditUser(){
-        console.log("click")
-    }
+    const navigate = useNavigate()
+
+
+
 
     return (
 
@@ -34,7 +34,9 @@ function UserShow({currentUser}) {
                     <Typography component="h2" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
                         Postcards from {name}
                     </Typography>
-                    {currentUser ? <Button onClick={handleEditUser}> Edit Profile</Button> : null}
+
+                    {currentUser ? <Button component={Link} to={{pathname: `/users/${id}/edit`, state: {name: name}}}> Edit Profile</Button> : null}
+
                     <div style={{display:"flex", justifyContent:"space-between", width:"108%"}}>
                         <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
                             2 Postcards

@@ -76,7 +76,7 @@ function LoginForm({ setCurrentUser }) {
                 </Button>
                 <Typography> Don't have an account?
                     <Link component={RouterLink}
-                          to="/api/signup"
+                          to="/signup"
                     >Sign Up
                     </Link>
                 </Typography>
