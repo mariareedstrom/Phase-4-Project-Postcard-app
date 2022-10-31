@@ -1,6 +1,7 @@
 class Api::PostcardsController < ApplicationController
   before_action :set_postcard, only: [:show, :update, :destroy, :index]
   before_action :is_authorized, only: [:update, :destroy]
+  skip_before_action :authenticate_user, only: [:show]
 
   def index
     postcards = Postcard.all

@@ -8,6 +8,7 @@ import LoggedOut from "./Pages/LoggedOut";
 import UserShow from "./Pages/UserShow";
 import SignupForm from "./Components/SignupForm";
 import UserEdit from "./Pages/UserEdit";
+import PostcardShow from "./Pages/PostcardShow";
 
 
 
@@ -63,6 +64,7 @@ if(!authenticated){
               <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
               <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
               <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
+              <Route path="/postcards/:id" element={<PostcardShow user={currentUser}/> } />
           </Routes>
 
     </main>

@@ -11,17 +11,28 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentIcon from '@mui/icons-material/Comment';
+import {Menu, MenuItem} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 
 
 
 function PostCard({postcard, currentUser}) {
-    const { user, image_url, greeting, destination } = postcard
+    const { user, image_url, greeting, destination, id } = postcard
     const {name} = postcard.user
 
-function showIfUser(){
-console.log(currentUser)
-}
+    const navigate = useNavigate()
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+        navigate(`/postcards/${id}`)
+    };
+
 
 
     return (
@@ -33,9 +44,29 @@ console.log(currentUser)
                     </Avatar>
                 }
                 action={
-                    <IconButton aria-label="settings">
+                    <div>
+                    <IconButton aria-label="settings"
+                                id="basic-button"
+                                aria-controls={open ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}
+                    >
                         <MoreVertIcon />
                     </IconButton>
+                    <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+                    >
+                    <MenuItem onClick={handleClose}>View Details</MenuItem>
+
+                    </Menu>
+                    </div>
                 }
                 title= {destination.name}
 
@@ -52,14 +83,6 @@ console.log(currentUser)
                     {greeting}
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <CommentIcon />
-                </IconButton>
-            </CardActions>
         </Card>
 
 
