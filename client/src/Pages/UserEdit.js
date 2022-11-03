@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import {Avatar, Box, Button, Grid, Paper, TextField} from "@mui/material";
-import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
+import { Button, Grid, Paper, TextField} from "@mui/material";
+
 
 function UserEdit({}) {
     const userId = useParams().id

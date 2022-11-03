@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
+
+
   namespace :api do
 
     resources :postcards, only: [:index, :create, :show, :destroy]
     resources :users, only: [:index, :show, :destroy, :update ]
     resources :destinations, only: [:index, :show, :create, :destroy]
+    resources :comments
 
     post '/signup', to: 'users#create'
 
