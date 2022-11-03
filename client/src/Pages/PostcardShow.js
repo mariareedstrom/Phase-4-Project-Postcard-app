@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {Container, Menu, MenuItem} from "@mui/material";
+import { useNavigate, useParams} from "react-router-dom";
+import {Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -12,15 +12,37 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { styled } from '@mui/material/styles';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import NewCommentForm from "../Components/NewCommentForm";
+
+
+
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}));
+
+
 
 function PostcardShow({user}) {
     const [postcard, setPostcard] = useState(null)
+    const [comments, setComments] = useState([]);
     const [isLoaded, setIsLoaded] = useState(null)
+    const [expanded, setExpanded] = useState(false);
 
     const postcardId = useParams().id
     const navigate = useNavigate()
 
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
 
     useEffect(() => {
@@ -28,6 +50,7 @@ function PostcardShow({user}) {
             .then((resp) => resp.json())
             .then((data) => {
                 setPostcard(data);
+                setComments(data.comments);
                 setIsLoaded(true);
             });
     }, [postcardId]);
@@ -37,6 +60,19 @@ function PostcardShow({user}) {
 
     const {image_url, greeting, destination } = postcard
 
+
+    function handleDelete(comment_id){
+        return (_event) => {
+            fetch(`/api/comments/${comment_id}`,{
+                        method: "DELETE"
+                    })
+                .then((resp) => {
+                    if (resp.status === 204) {
+                        setComments(comments.filter(comment => comment.id !== comment_id))
+                    }
+                })
+        }
+    }
 
     return (
         <Container maxWidth="sm">
@@ -67,10 +103,35 @@ function PostcardShow({user}) {
                     <IconButton aria-label="add to favorites">
                         <FavoriteIcon />
                     </IconButton>
-                    <IconButton aria-label="comment">
-                        <CommentIcon />
-                    </IconButton>
+
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <IconButton aria-label="comment">
+                            <CommentIcon />
+                        </IconButton>
+                    </ExpandMore>
                 </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography paragraph>Comments:</Typography>
+
+                        { comments.map((comment) =>
+                           ( <Typography paragraph>
+                               {comment.content}
+                               -{comment.user.name}
+                               {comment.user.id === user.id ?
+                                   <DeleteOutlineIcon onClick={handleDelete(comment.id)}/>
+                                   : null
+                               }
+                            </Typography>))
+                        }
+                        <NewCommentForm comments={comments} setComments={setComments} user={user} postcard={postcard}/>
+                    </CardContent>
+                </Collapse>
             </Card>
 
 

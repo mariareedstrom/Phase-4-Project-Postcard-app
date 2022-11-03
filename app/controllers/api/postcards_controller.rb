@@ -5,7 +5,7 @@ class Api::PostcardsController < ApplicationController
 
   def index
     postcards = Postcard.all
-    render json: postcards, include: [:user, :destination], status: :ok
+    render json: postcards, include: [:user, :destination, :comments], status: :ok
   end
 
   def create
@@ -14,7 +14,7 @@ class Api::PostcardsController < ApplicationController
   end
 
   def show
-    render json: @postcard, include: [:user, :destination], status: :ok
+    render json: @postcard, include: [:user, :destination, :comments ], status: :ok
   end
 
   def update
@@ -29,7 +29,7 @@ class Api::PostcardsController < ApplicationController
   private
 
   def postcard_params
-    params.permit(:user_id, :destination_id, :greeting, :image_url)
+    params.permit(:user_id, :destination_id, :greeting, :image_url, :comments)
   end
 
   def set_postcard

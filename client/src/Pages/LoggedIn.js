@@ -1,7 +1,6 @@
 import React from 'react';
 import PostcardIndex from "./PostcardIndex";
-import Navbar from "../Components/Navbar";
-import Header from "../Components/Header";
+
 
 
 function LoggedIn({currentUser, setCurrentUser}) {
