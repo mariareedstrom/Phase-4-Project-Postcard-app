@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -12,16 +12,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import NewCommentForm from "../Components/NewCommentForm";
 
 
-
 const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
+    const {expand, ...other} = props;
     return <IconButton {...other} />;
-})(({ theme, expand }) => ({
+})(({theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
@@ -30,12 +29,14 @@ const ExpandMore = styled((props) => {
 }));
 
 
-
 function PostcardShow({user}) {
     const [postcard, setPostcard] = useState(null)
     const [comments, setComments] = useState([]);
     const [isLoaded, setIsLoaded] = useState(null)
     const [expanded, setExpanded] = useState(false);
+    const [favoriteCount, setFavoriteCount] = useState(0)
+    const [myFavorite, setMyFavorite] = useState(null)
+
 
     const postcardId = useParams().id
     const navigate = useNavigate()
@@ -52,20 +53,22 @@ function PostcardShow({user}) {
                 setPostcard(data);
                 setComments(data.comments);
                 setIsLoaded(true);
+                setFavoriteCount(data.favorites.length);
+                setMyFavorite(data.favorites.find(({user_id}) => user_id === user.id))
             });
     }, [postcardId]);
 
 
     if (!isLoaded) return <h3>Greetings coming your way....</h3>;
 
-    const {image_url, greeting, destination } = postcard
+    const {image_url, greeting, destination, favorites} = postcard
 
 
-    function handleDelete(comment_id){
+    function handleDelete(comment_id) {
         return (_event) => {
-            fetch(`/api/comments/${comment_id}`,{
-                        method: "DELETE"
-                    })
+            fetch(`/api/comments/${comment_id}`, {
+                method: "DELETE"
+            })
                 .then((resp) => {
                     if (resp.status === 204) {
                         setComments(comments.filter(comment => comment.id !== comment_id))
@@ -74,13 +77,50 @@ function PostcardShow({user}) {
         }
     }
 
+    function handleFavoriteClick() {
+
+        if (myFavorite) {
+            fetch(`/api/postcards/${postcardId}/favorites/${myFavorite.id}`, {
+                method: "DELETE",
+            })
+                .then((res) => {
+                    if (res.status === 204) {
+                        setFavoriteCount(favoriteCount - 1)
+                        setMyFavorite(null)
+                    }
+
+                })
+        } else {
+
+            fetch(`/api/postcards/${postcardId}/favorites`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: user.id,
+                })
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        setFavoriteCount(favoriteCount + 1)
+                        res.json().then((data) => setMyFavorite(data) )
+
+                    }
+
+                })
+
+        }
+    }
+
+
     return (
         <Container maxWidth="sm">
 
-            <Card sx={{ maxWidth: 500 }}>
+            <Card sx={{maxWidth: 500}}>
                 <CardHeader
                     avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label={user.name}>
+                        <Avatar sx={{bgcolor: red[500]}} aria-label={user.name}>
                             {user.name}
                         </Avatar>
                     }
@@ -100,8 +140,9 @@ function PostcardShow({user}) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
+                    <IconButton aria-label="favorite" onClick={handleFavoriteClick}>
+                        <FavoriteIcon htmlColor={myFavorite ? 'red' : ''}/>
+                        <span>{favoriteCount}</span>
                     </IconButton>
 
                     <ExpandMore
@@ -110,23 +151,21 @@ function PostcardShow({user}) {
                         aria-expanded={expanded}
                         aria-label="show more"
                     >
-                        <IconButton aria-label="comment">
-                            <CommentIcon />
-                        </IconButton>
+                        <CommentIcon/>
                     </ExpandMore>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph>Comments:</Typography>
 
-                        { comments.map((comment) =>
-                           ( <Typography paragraph>
-                               {comment.content}
-                               -{comment.user.name}
-                               {comment.user.id === user.id ?
-                                   <DeleteOutlineIcon onClick={handleDelete(comment.id)}/>
-                                   : null
-                               }
+                        {comments.map((comment) =>
+                            (<Typography paragraph>
+                                {comment.content}
+                                -{comment.user.name}
+                                {comment.user.id === user.id ?
+                                    <DeleteOutlineIcon onClick={handleDelete(comment.id)}/>
+                                    : null
+                                }
                             </Typography>))
                         }
                         <NewCommentForm comments={comments} setComments={setComments} user={user} postcard={postcard}/>

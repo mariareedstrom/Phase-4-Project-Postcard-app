@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import PostCard from "../Components/PostCard";
 
 function UserShow({currentUser}) {
-    const {name, postcards, id, username } = currentUser
+    const {name, postcards, id, username, comments } = currentUser
     const destinations = postcards.map(card => card.destination)
 
     const navigate = useNavigate()
@@ -43,7 +43,7 @@ function UserShow({currentUser}) {
                             {destinations.length} Destinations
                         </Typography>
                         <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
-                            34 Comments
+                            {comments.length} Comments
                         </Typography>
                     </div>
                 </div>

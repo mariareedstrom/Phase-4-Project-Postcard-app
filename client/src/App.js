@@ -45,6 +45,10 @@ if(!authenticated){
 
     }
 
+    function onAddToFavorites(postcard){
+
+    }
+
   return (
       <main className="App" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
           {currentUser? <Header currentUser={currentUser} handleLogout={handleLogout} /> : null }
@@ -64,7 +68,7 @@ if(!authenticated){
               <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
               <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
               <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
-              <Route path="/postcards/:id" element={<PostcardShow user={currentUser}/> } />
+              <Route path="/postcards/:id" element={<PostcardShow user={currentUser} onAddToFavorites={onAddToFavorites()}/> } />
           </Routes>
 
     </main>

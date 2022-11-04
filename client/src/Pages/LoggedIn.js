@@ -3,7 +3,7 @@ import PostcardIndex from "./PostcardIndex";
 
 
 
-function LoggedIn({currentUser, setCurrentUser}) {
+function LoggedIn({currentUser}) {
 
 
 

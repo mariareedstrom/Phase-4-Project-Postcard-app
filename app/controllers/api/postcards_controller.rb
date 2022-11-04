@@ -14,7 +14,7 @@ class Api::PostcardsController < ApplicationController
   end
 
   def show
-    render json: @postcard, include: [:user, :destination, :comments ], status: :ok
+    render json: @postcard, include: [:user, :destination, :comments, :favorites], status: :ok
   end
 
   def update
@@ -29,7 +29,7 @@ class Api::PostcardsController < ApplicationController
   private
 
   def postcard_params
-    params.permit(:user_id, :destination_id, :greeting, :image_url, :comments)
+    params.permit(:user_id, :destination_id, :greeting, :image_url)
   end
 
   def set_postcard
