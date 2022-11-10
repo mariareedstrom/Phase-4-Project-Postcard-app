@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { Button, Grid, Paper, TextField} from "@mui/material";
 
 
-function UserEdit({}) {
+function UserEdit() {
     const userId = useParams().id
     const navigate = useNavigate()
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
-import {Collapse, Container} from "@mui/material";
+import {useNavigate, useParams} from "react-router-dom";
+import {Button, Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
 import {styled} from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 import NewCommentForm from "../Components/NewCommentForm";
 
 
@@ -39,6 +40,8 @@ function PostcardShow({user}) {
 
 
     const postcardId = useParams().id
+    const navigate = useNavigate()
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -60,7 +63,7 @@ function PostcardShow({user}) {
 
     if (!isLoaded) return <h3>Greetings coming your way....</h3>;
 
-    const {image_url, greeting, destination, favorites} = postcard
+    const {image_url, greeting, destination} = postcard
 
 
     function handleDelete(comment_id) {
@@ -112,6 +115,13 @@ function PostcardShow({user}) {
         }
     }
 
+    function handleDeletePostcard(){
+        fetch(`/api/postcards/${postcardId}`, {
+            method: "DELETE",
+        })
+            .then(() => navigate("/"))
+    }
+
 
     return (
         <Container maxWidth="sm">
@@ -143,6 +153,10 @@ function PostcardShow({user}) {
                         <FavoriteIcon htmlColor={myFavorite ? 'red' : ''}/>
                         <span>{favoriteCount}</span>
                     </IconButton>
+
+                    {user.id === postcard.user.id ? <Button onClick={handleDeletePostcard} variant="outlined" startIcon={<DeleteIcon />}>
+                        Delete
+                    </Button> : null}
 
                     <ExpandMore
                         expand={expanded}
