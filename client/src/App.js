@@ -9,6 +9,7 @@ import UserShow from "./Pages/UserShow";
 import SignupForm from "./Components/SignupForm";
 import UserEdit from "./Pages/UserEdit";
 import PostcardShow from "./Pages/PostcardShow";
+import NewPostcardForm from "./Components/NewPostcardForm";
 
 
 
@@ -69,6 +70,7 @@ if(!authenticated){
               <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
               <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
               <Route path="/postcards/:id" element={<PostcardShow user={currentUser} onAddToFavorites={onAddToFavorites()}/> } />
+              <Route path="/postcards/new" element={<NewPostcardForm user ={currentUser} />} />
           </Routes>
 
     </main>

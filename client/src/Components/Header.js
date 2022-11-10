@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppBar, Box, Toolbar, Typography, Button, Avatar } from "@mui/material";
+import { AppBar,Toolbar, Typography, Button, Avatar } from "@mui/material";
 import {Link} from 'react-router-dom'
 
 
-function Header({currentUser, setCurrentUser, handleLogout}) {
+function Header({currentUser, handleLogout}) {
 
 
 

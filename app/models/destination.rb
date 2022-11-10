@@ -3,5 +3,5 @@ class Destination < ApplicationRecord
   has_many :postcards
   has_many :users, through: :postcards
 
-  validates :name, presence: true
+  validates :name, presence: true,  uniqueness: true
 end

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -39,7 +39,6 @@ function PostcardShow({user}) {
 
 
     const postcardId = useParams().id
-    const navigate = useNavigate()
 
     const handleExpandClick = () => {
         setExpanded(!expanded);

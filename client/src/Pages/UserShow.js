@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, Link} from "react-router-dom";
+import React from 'react';
+import { Link} from "react-router-dom";
 import {Box, Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import PostCard from "../Components/PostCard";
 
 function UserShow({currentUser}) {
-    const {name, postcards, id, username, comments } = currentUser
+    const {name, postcards, id, comments } = currentUser
     const destinations = postcards.map(card => card.destination)
 
-    const navigate = useNavigate()
+
 
 
     return (
