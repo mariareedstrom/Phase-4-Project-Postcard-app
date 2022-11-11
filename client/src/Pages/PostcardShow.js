@@ -11,7 +11,6 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import Avatar from "@mui/material/Avatar";
-import {red} from "@mui/material/colors";
 import {styled} from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -128,11 +127,7 @@ function PostcardShow({user}) {
 
             <Card sx={{maxWidth: 500}}>
                 <CardHeader
-                    avatar={
-                        <Avatar sx={{bgcolor: red[500]}} aria-label={user.name}>
-                            {user.name}
-                        </Avatar>
-                    }
+                    avatar={ <Avatar  aria-label={user.name} src={user.picture}></Avatar>}
                     title={destination.name}
 
                     subheader="September 14, 2016"

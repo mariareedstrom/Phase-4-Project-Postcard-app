@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {Menu, MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
@@ -16,7 +15,8 @@ import {useNavigate} from "react-router-dom";
 
 function PostCard({postcard}) {
     const { user, image_url, greeting, destination, id } = postcard
-    const {name} = postcard.user
+
+
 
     const navigate = useNavigate()
 
@@ -37,9 +37,7 @@ function PostCard({postcard}) {
         <Card sx={{ maxWidth: 345 }}>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label={user.name}>
-                        {name}
-                    </Avatar>
+                    <Avatar  aria-label={user.name} src={user.picture}></Avatar>
                 }
                 action={
                     <div>

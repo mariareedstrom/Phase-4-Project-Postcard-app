@@ -10,7 +10,8 @@ function SignupForm({setCurrentUser}) {
     const [formData, setFormData] = useState({
         name: "",
         username: "",
-        password: ""
+        password: "",
+        picture: ""
     })
 
 
@@ -76,6 +77,13 @@ function SignupForm({setCurrentUser}) {
                            value={formData.password}
                            placeholder="enter password"
                            type="password"
+                           fullWidth required/>
+                <TextField onChange={(e) => handleChange(e)}
+                           label="picture"
+                           name="picture"
+                           value={formData.picture}
+                           placeholder="picture url"
+                           type="url"
                            fullWidth required/>
                 <Button type="submit"
                         color="primary"

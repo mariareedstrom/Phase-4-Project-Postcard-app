@@ -26,7 +26,7 @@ function UserShow({currentUser}) {
                          style={{width: "160px",
                                 height:"160px",
                                 borderRadius:"80px"}}
-                    src="https://images.unsplash.com/photo-1524117074681-31bd4de22ad3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YW5pbWF0aW9uJTIwY2FydG9vbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60"/>
+                    src={currentUser.picture}/>
                 </div>
                 <div>
                     <Typography component="h2" variant="h4" gutterBottom sx={{marginTop: '16px'}}>

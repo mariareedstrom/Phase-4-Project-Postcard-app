@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Grid, MenuItem, Paper, TextField, Button} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Typography from "@mui/material/Typography";
@@ -14,6 +14,8 @@ function NewPostcardForm({user}) {
         image_url: "",
         user_id: user.id
     })
+
+    const navigate = useNavigate()
 
     //to toggle dropdown vs destination input field
     const [isNewDestination, setIsNewDestination] = useState(false)
@@ -42,29 +44,34 @@ function NewPostcardForm({user}) {
     }
 
     function handleDestinationChange(e) {
-        setFormData({...formData, destination_id: e.target.value, destination_attributes: {}})
+        setFormData({...formData, destination_id: e.target.value})
     }
 
     function handleNewDestinationChange(e) {
-        setFormData({...formData, destination_id: null, destination_attributes: {name: e.target.value}})
+        setFormData({...formData, destination_attributes: {name: e.target.value}})
     }
 
     function handleSubmit(e) {
         e.preventDefault()
-
-        console.log(formData)
+        // XXX: Allows for using existing or new destination
+        const cleaned = {...formData}
+        if(cleaned.destination_id) {
+            delete cleaned.destination_attributes;
+        } else {
+            delete cleaned.destination_id;
+        }
 
         fetch(`/api/postcards/`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(cleaned)
         })
             .then(res => {
                 if (res.ok) {
                     res.json()
-                        .then(data => console.log(data))
+                        .then(() => navigate("/"))
                 } else
                     res.json().then((errors) => {
                         console.log(errors)
@@ -104,7 +111,7 @@ function NewPostcardForm({user}) {
                         <TextField onChange={handleNewDestinationChange}
                                    label="destination"
                                    name="destination"
-                                   value={formData.destination_attributes.name}
+                                   value={formData.destination_attributes?.name}
                                    placeholder="enter destination"
                                    fullWidth required/>
                 }

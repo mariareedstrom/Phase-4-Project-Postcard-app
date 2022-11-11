@@ -19,7 +19,7 @@ function Header({currentUser, handleLogout}) {
                     </Typography>
                         <Button color="inherit" onClick={handleLogout}>Logout</Button>
                     <Link to={`/users/${currentUser.id}`}>
-                        <Avatar alt={`${currentUser.name}`} src="/avatar.png" />
+                        <Avatar alt={`${currentUser.name}`} src={currentUser.picture} />
                     </Link>
                 </Toolbar>
             </AppBar>
