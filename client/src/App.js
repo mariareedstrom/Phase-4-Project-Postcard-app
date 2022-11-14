@@ -10,6 +10,7 @@ import SignupForm from "./Components/SignupForm";
 import UserEdit from "./Pages/UserEdit";
 import PostcardShow from "./Pages/PostcardShow";
 import NewPostcardForm from "./Components/NewPostcardForm";
+import {Container} from "@mui/material";
 
 
 
@@ -51,29 +52,33 @@ if(!authenticated){
     }
 
   return (
-      <main className="App" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
-          {currentUser? <Header currentUser={currentUser} handleLogout={handleLogout} /> : null }
-          <Routes>
-              <Route path="/" element=
-                  { currentUser? (
-                      <LoggedIn
-                          setCurrentUser ={setCurrentUser}
-                          currentUser = {currentUser}
+    <>
+        {currentUser? <Header currentUser={currentUser} handleLogout={handleLogout} /> : null }
+        <Container maxWidth="xl">
+          <main className="App" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
+              <Routes>
+                  <Route path="/" element=
+                      { currentUser? (
+                          <LoggedIn
+                              setCurrentUser ={setCurrentUser}
+                              currentUser = {currentUser}
+                          />
+                      ) : (
+                          <LoggedOut
+                              setCurrentUser = {setCurrentUser}
+                          />
+                      )}
                       />
-                  ) : (
-                      <LoggedOut
-                          setCurrentUser = {setCurrentUser}
-                      />
-                  )}
-                  />
-              <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
-              <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
-              <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
-              <Route path="/postcards/:id" element={<PostcardShow user={currentUser} onAddToFavorites={onAddToFavorites()}/> } />
-              <Route path="/postcards/new" element={<NewPostcardForm user ={currentUser} />} />
-          </Routes>
+                  <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
+                  <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
+                  <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
+                  <Route path="/postcards/:id" element={<PostcardShow user={currentUser} onAddToFavorites={onAddToFavorites()}/> } />
+                  <Route path="/postcards/new" element={<NewPostcardForm user ={currentUser} />} />
+              </Routes>
 
-    </main>
+        </main>
+        </Container>
+    </>
   );
 }
 

@@ -1,28 +1,49 @@
 import React from 'react';
-import { AppBar,Toolbar, Typography, Button, Avatar } from "@mui/material";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import {AppBar, Toolbar, Button, Avatar, Container} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 
 function Header({currentUser, handleLogout}) {
 
+    const navigate = useNavigate()
+
+    function handleSendPostcard() {
+        navigate(`/postcards/new`)
+    }
+
+    function handleViewUser() {
+        navigate(`/users/${currentUser.id}`)
+    }
 
 
     return (
 
-            <AppBar position="static">
-                <Toolbar>
-                    <Link to={`/`}>
-                        <Avatar alt={`logo`} src='/postcard-logo.png' />
+        <AppBar position="static" sx={{marginBottom: "36px", bgcolor: "#fff"}}>
+            <Container maxWidth="xl">
+                <Toolbar disableGutters>
+                    <Link to={`/`} style={{flex: 1}}>
+                        <div style={{height: '60px', overflow: 'hidden'}}>
+                            <img alt="logo" src="/postcard-logo.png"
+                                 style={{objectPosition: '0 -30px', height: '120px'}}/>
+                        </div>
+
                     </Link>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Greetings Friends
-                    </Typography>
-                        <Button color="inherit" onClick={handleLogout}>Logout</Button>
-                    <Link to={`/users/${currentUser.id}`}>
-                        <Avatar alt={`${currentUser.name}`} src={currentUser.picture} />
-                    </Link>
+
+                    <Button variant="outlined" color="primary" aria-label="add postcard" sx={{margin: "12px"}} onClick={handleSendPostcard}>
+                        <SendIcon sx={{mr: 1}}/>
+                        Send Postcard
+                    </Button>
+
+                    <Button variant="outlined" color="primary" sx={{margin: "12px"}} onClick={handleLogout}>Logout</Button>
+
+
+                    <Avatar alt={`${currentUser.name}`} src={currentUser.picture}  sx={{margin: "12px"}} onClick={handleViewUser}/>
+
+
                 </Toolbar>
-            </AppBar>
+            </Container>
+        </AppBar>
 
 
     );
