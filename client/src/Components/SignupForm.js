@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import {Avatar, Button, Grid, Paper, TextField, Typography, Link} from "@mui/material";
-import { Link as RouterLink } from 'react-router-dom'
-import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
-
-
+import React, {useState} from 'react';
+import {Button, Paper, TextField, Typography, Link, Box} from "@mui/material";
+import {Link as RouterLink, useNavigate} from 'react-router-dom'
 
 
 function SignupForm({setCurrentUser}) {
@@ -14,51 +11,66 @@ function SignupForm({setCurrentUser}) {
         picture: ""
     })
 
+    const navigate = useNavigate()
 
-    function handleChange(e){
+
+    function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
 
         fetch('/api/signup', {
             method: "POST",
             headers: {
-                "Content-Type":"application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(formData)
         })
             .then((resp) => {
                 if (resp.ok) {
                     resp.json().then((user) => {
-                        console.log(user)
                         setCurrentUser(user)
+                        navigate('/')
                     })
                 } else {
-                        resp.json().then((errors) => {
-                            console.log(errors)
-                        })
-                    }
+                    resp.json().then((errors) => {
+                        console.log(errors)
+                    })
+                }
             })
     }
 
 
-
-    const paperStyle={padding :20, height:"70vp", width: 280, margin: "20px auto"}
-    const buttonStyle={margin: "8px, 0"}
+    const buttonStyle = {margin: "8px, 0"}
 
     return (
 
-        <Grid>
+        <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding:'40px'
+        }}>
             <Paper elevation={10}
-                   style={paperStyle}
                    component="form"
-                   onSubmit={handleSubmit}>
-                <Grid align="center">
-                    <Avatar ><VpnKeyOutlinedIcon/>></Avatar>
-                    <h2>Welcome New User</h2>
-                </Grid>
+                   onSubmit={handleSubmit}
+                   sx={{
+                       display: "flex",
+                       flex:1,
+                       flexDirection: "column",
+                       gap: "12px",
+                       padding: '20px',
+                       maxWidth: '320px',
+                   }}>
+                <Box>
+                    <Box sx={{height: '60px', overflow: 'hidden'}}>
+                        <img alt="logo" src="/postcard-logo.png"
+                             style={{objectPosition: '0 -30px', height: '120px'}}/>
+                    </Box>
+                    <Typography variant={"h6"}>Welcome New User</Typography>
+                </Box>
+
                 <TextField onChange={(e) => handleChange(e)}
                            label="Name"
                            name="name"
@@ -92,14 +104,11 @@ function SignupForm({setCurrentUser}) {
                         variant="contained">
                     Sign Up!
                 </Button>
-                <Typography> Already have an account?
-                    <Link component={RouterLink}
-                          to="/"
-                    >Log In
-                    </Link>
-                </Typography>
+                <Typography>Already have an account? </Typography>
+                <Link component={RouterLink} to="/" sx={{marginLeft: '1em'}}>Log In</Link>
+
             </Paper>
-        </Grid>
+        </Box>
 
 
     );

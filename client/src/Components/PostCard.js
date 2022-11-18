@@ -7,15 +7,12 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {Menu, MenuItem} from "@mui/material";
+import {Box, Menu, MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 
-
-
 function PostCard({postcard}) {
-    const { user, image_url, greeting, destination, id } = postcard
-
+    const {user, image_url, greeting, destination, id, created_at} = postcard
 
 
     const navigate = useNavigate()
@@ -30,43 +27,49 @@ function PostCard({postcard}) {
         navigate(`/postcards/${id}`)
     };
 
+    function formatDate(date) {
+        const event = new Date(date)
+        const options = {year: 'numeric', month: 'long', day: 'numeric'}
+        const locale = document.querySelector('html').lang
 
+        return event.toLocaleDateString(locale, options)
+    }
 
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{maxWidth: 345}}>
             <CardHeader
                 avatar={
-                    <Avatar  aria-label={user.name} src={user.picture}></Avatar>
+                    <Avatar aria-label={user.name} src={user.picture}></Avatar>
                 }
                 action={
-                    <div>
-                    <IconButton aria-label="settings"
-                                id="basic-button"
-                                aria-controls={open ? 'basic-menu' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}
-                    >
-                        <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-                    >
-                    <MenuItem onClick={handleClose}>View Details</MenuItem>
+                    <Box>
+                        <IconButton aria-label="settings"
+                                    id="basic-button"
+                                    aria-controls={open ? 'basic-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick}
+                        >
+                            <MoreVertIcon/>
+                        </IconButton>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>View Details</MenuItem>
 
-                    </Menu>
-                    </div>
+                        </Menu>
+                    </Box>
                 }
-                title= {destination.name}
+                title={destination.name}
 
-                subheader="September 14, 2016"
+                subheader={formatDate(created_at)}
             />
             <CardMedia
                 component="img"

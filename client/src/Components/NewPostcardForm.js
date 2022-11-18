@@ -14,6 +14,7 @@ function NewPostcardForm({user}) {
         image_url: "",
         user_id: user.id
     })
+    const [errors, setErrors] = useState([])
 
     const navigate = useNavigate()
 
@@ -37,6 +38,10 @@ function NewPostcardForm({user}) {
     //display add new dest button
     function handleNewDestination() {
         setIsNewDestination(true)
+    }
+
+    function handleSelectDestination() {
+        setIsNewDestination(false)
     }
 
     function handleChange(e) {
@@ -73,8 +78,8 @@ function NewPostcardForm({user}) {
                     res.json()
                         .then(() => navigate("/"))
                 } else
-                    res.json().then((errors) => {
-                        console.log(errors)
+                    res.json().then((errorsData) => {
+                        setErrors(errorsData)
                     })
             })
 
@@ -82,16 +87,30 @@ function NewPostcardForm({user}) {
 
 
 
+
     return (
-        <Grid>
+        <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding:'40px'
+        }}>
             <Paper elevation={10}
                    component="form"
                    onSubmit={handleSubmit}
+                   sx={{
+                       display: 'flex',
+                       flex: 1,
+                       flexDirection: 'column',
+                       gap: '12px',
+                       maxWidth: '650px',
+                       padding: '20px'
+
+                   }}
             >
-                <Grid align="center">
+                <Box>
                     <SendIcon/>
-                    <Typography>Send a new Postcard</Typography>
-                </Grid>
+                    <Typography variant={"h6"}>Send a new Postcard</Typography>
+                </Box>
                 {
                     !isNewDestination ?
                         <TextField
@@ -117,7 +136,7 @@ function NewPostcardForm({user}) {
                 }
 
                 { !isNewDestination ? <Button onClick={handleNewDestination} variant="outlined">Add a new destination </Button> : null}
-
+                { isNewDestination ? <Button onClick={handleSelectDestination} variant="outlined">Select destination </Button> : null}
                 <TextField onChange={(e) => handleChange(e)}
                            label="image"
                            name="image_url"
@@ -132,6 +151,13 @@ function NewPostcardForm({user}) {
                            placeholder="enter greeting"
                            type="text"
                            fullWidth required/>
+                {errors.length > 0 && (
+                    <ul style={{ color: "red" }}>
+                        {errors.map((error) => (
+                            <li key={error}>{error}</li>
+                        ))}
+                    </ul>
+                )}
                 <Box sx={{'& > :not(style)': {m: 1}}}>
                     <Fab variant="extended" size="medium" color="primary" aria-label="submit" type="submit">
                         Submit
@@ -140,9 +166,8 @@ function NewPostcardForm({user}) {
                         Cancel
                     </Fab>
                 </Box>
-
             </Paper>
-        </Grid>
+        </Box>
     );
 }
 
