@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { Button, Grid, Paper, TextField} from "@mui/material";
+import {Box, Button, Paper, TextField} from "@mui/material";
 
 
 function UserEdit() {
@@ -11,6 +11,7 @@ function UserEdit() {
 const [user, setUser] = useState({
     name: "",
     username: "",
+    picture: "",
     id: null
 })
 
@@ -49,20 +50,28 @@ const [user, setUser] = useState({
         navigate(`/users/${userId}`)
     }
 
-    const paperStyle={padding :20, height:"70vp", width: 280, margin: "20px auto"}
-    const buttonStyle={margin: "8px, 0"}
 
     return (
-        <Grid>
+        <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding:'40px'
+        }}>
+
             <Paper elevation={10}
-                   style={paperStyle}
                    component="form"
-                   onSubmit={handleSubmit}>
-                <Grid align="center">
-                    <Typography component="h2" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
-                        Update your info!
-                    </Typography>
-                </Grid>
+                   onSubmit={handleSubmit}
+                    sx={{
+                        display: 'flex',
+                        flex: 1,
+                        flexDirection: 'column',
+                        gap: '12px',
+                        padding: '20px',
+                        maxWidth: '320px'
+                    }}>
+
+                    <Typography variant={"h6"}>Update your info!</Typography>
+
                 <TextField onChange={(e) => handleChange(e)}
                            label="Name"
                            name="name"
@@ -75,26 +84,32 @@ const [user, setUser] = useState({
                            value={user.username}
                            placeholder="enter username"
                            fullWidth required/>
+                <TextField onChange={(e) => handleChange(e)}
+                           label="picture"
+                           name="picture"
+                           value={user.picture}
+                           placeholder="picture url"
+                           type="url"
+                           fullWidth required/>
 
                 <Button type="submit"
                         onClick={handleSubmit}
-                        color="primary"
-                        style={buttonStyle}
-                        fullWidth required
-                        variant="contained">
-                    Submit
+                        sx={{margin: "8px, 0"}}
+                        variant="contained"
+                        fullWidth required>
+                        Submit
                 </Button>
-                <Button type="cancel"
+                <Button
                         onClick={handleFromCancel}
-                        color="primary"
-                        style={buttonStyle}
-                        fullWidth required
-                        variant="contained">
+                        sx={{margin: "8px, 0"}}
+                        variant="outlined"
+                        fullWidth required>
                     Cancel
                 </Button>
             </Paper>
+        </Box>
 
-        </Grid>
+
     );
 }
 

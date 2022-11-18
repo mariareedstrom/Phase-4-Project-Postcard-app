@@ -8,6 +8,7 @@ function NewCommentForm({comments, setComments, user, postcard}) {
         user_id: user.id,
         postcard_id: postcard.id
     })
+    const [errors, setErrors] =useState([])
 
 
 
@@ -26,10 +27,18 @@ function NewCommentForm({comments, setComments, user, postcard}) {
             },
             body: JSON.stringify(formData)
         })
-            .then(res => res.json())
-            .then(data => {
-                setComments([...comments, data])
-                setFormData({...formData, content:""})
+            .then(res => {
+                if (res.ok){
+                    res.json()
+                        .then(data => {
+                            setComments([...comments, data])
+                            setFormData({...formData, content:""})
+                        })
+                } else {
+                    res.json().then((errorsData) =>{
+                        setErrors((errorsData))
+                    })
+                }
             })
     }
 
@@ -45,7 +54,13 @@ function NewCommentForm({comments, setComments, user, postcard}) {
                            value={formData.content}
                            placeholder="add comment"
                            fullWidth required/>
-
+            {errors.length > 0 && (
+                <ul style={{ color: "red" }}>
+                    {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                    ))}
+                </ul>
+            )}
 
                 <Button type="submit"
                         onClick={handleSubmit}

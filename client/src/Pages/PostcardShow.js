@@ -106,9 +106,7 @@ function PostcardShow({user}) {
                     if (res.ok) {
                         setFavoriteCount(favoriteCount + 1)
                         res.json().then((data) => setMyFavorite(data) )
-
                     }
-
                 })
 
         }

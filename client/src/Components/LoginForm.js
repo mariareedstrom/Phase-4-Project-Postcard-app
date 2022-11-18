@@ -1,30 +1,27 @@
-import React, { useState } from 'react';
-import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from "@mui/material";
-import { Link as RouterLink } from 'react-router-dom'
+import React, {useState} from 'react';
+import {Grid, Paper, Avatar, TextField, Button, Typography, Link} from "@mui/material";
+import {Link as RouterLink} from 'react-router-dom'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
+import {Box} from "@mui/material";
 
 
-
-
-
-
-function LoginForm({ setCurrentUser }) {
+function LoginForm({setCurrentUser}) {
     const [formData, setFormData] = useState({
         username: "",
         password: ""
     })
 
 
-    function handleChange(e){
+    function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
         fetch("/api/login", {
             method: "POST",
             headers: {
-                "Content-Type":"application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(formData)
         })
@@ -40,20 +37,34 @@ function LoginForm({ setCurrentUser }) {
             })
 
     }
-    const paperStyle={padding :20, height:"70vp", width: 280, margin: "20px auto"}
-    const buttonStyle={margin: "8px, 0"}
+
 
     return (
 
-        <Grid>
+        <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '40px'
+        }}>
             <Paper elevation={10}
-                   style={paperStyle}
                    component="form"
-                   onSubmit={handleSubmit}>
-                <Grid align="center">
-                <Avatar ><VpnKeyOutlinedIcon/>></Avatar>
-                <h2>Sign In</h2>
-                </Grid>
+                   onSubmit={handleSubmit}
+                   sx={{
+                       display: 'flex',
+                       flex: 1,
+                       flexDirection: 'column',
+                       gap: '12px',
+                       padding: '20px',
+                       maxWidth: '320px'
+                   }}>
+                <Box>
+                    <Box sx={{height: '60px', overflow: 'hidden'}}>
+                        <img alt="logo" src="/postcard-logo.png"
+                             style={{objectPosition: '0 -30px', height: '120px'}}/>
+                    </Box>
+                    <Typography variant={"h6"}>Sign In</Typography>
+                </Box>
+
                 <TextField onChange={(e) => handleChange(e)}
                            label="Username"
                            name="username"
@@ -69,19 +80,16 @@ function LoginForm({ setCurrentUser }) {
                            fullWidth required/>
                 <Button type="submit"
                         color="primary"
-                        style={buttonStyle}
                         fullWidth required
-                        variant="contained">
-                        Sign In
+                        variant="contained"
+                        sx={{margin: "8px, 0"}}
+                >
+                    Sign In
                 </Button>
-                <Typography> Don't have an account?
-                    <Link component={RouterLink}
-                          to="/signup"
-                    >Sign Up
-                    </Link>
-                </Typography>
+                <Typography>Don't have an account?</Typography>
+                <Link component={RouterLink} to="/signup" sx={{marginLeft: '1em'}}>Sign Up</Link>
             </Paper>
-        </Grid>
+        </Box>
 
 
     );

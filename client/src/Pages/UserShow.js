@@ -11,15 +11,15 @@ function UserShow({currentUser}) {
 
     return (
 
-        <>
-            < div style={{maxWidth: "550px", margin: "0 auto"}}>
-                <Box style={{
+        <Box>
+            < Box sx={{maxWidth: "550px", margin: "0 auto"}}>
+                <Box sx={{
                     display: "flex",
                     justifyContent: "space-around",
                     margin: "18px 0px",
                     borderBottom: "1px solid grey"
                 }}>
-                    <div style={{
+                    <Box sx={{
                         height: "100px",
                         width: "100px",
                         borderRadius: "50%",
@@ -34,9 +34,9 @@ function UserShow({currentUser}) {
                                  objectFit: "cover"
                              }}
                              src={currentUser.picture}/>
-                    </div>
-                    <div>
-                        <Typography component="h2" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
+                    </Box>
+                    <Box>
+                        <Typography variant="h4"  gutterBottom sx={{marginTop: '16px'}}>
                             Postcards from {name}
                         </Typography>
 
@@ -44,22 +44,22 @@ function UserShow({currentUser}) {
                             <Button component={Link} to={{pathname: `/users/${id}/edit`, state: {name: name}}}> Edit
                                 Profile</Button> : null}
 
-                        <div style={{display: "flex", justifyContent: "space-between", width: "108%"}}>
-                            <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
+                        <Box style={{display: "flex", justifyContent: "space-between", width: "108%"}}>
+                            <Typography variant="overline" gutterBottom sx={{marginTop: '16px'}}>
                                 {postcards.length} Postcards
                             </Typography>
-                            <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
+                            <Typography variant="overline" gutterBottom sx={{marginTop: '16px'}}>
                                 {destinations.length} Destinations
                             </Typography>
-                            <Typography component="h6" variant="h4" gutterBottom sx={{marginTop: '16px'}}>
+                            <Typography variant="overline" gutterBottom sx={{marginTop: '16px'}}>
                                 {comments.length} Comments
                             </Typography>
-                        </div>
-                    </div>
+                        </Box>
+                    </Box>
                 </Box>
+            </Box>
 
-                <Grid className="gallery">
-
+                <Grid container spacing={4}>
                     {postcards.map((postcard) => (
 
                         <Grid item display="flex" key={postcard.id}>
@@ -67,8 +67,8 @@ function UserShow({currentUser}) {
                         </Grid>
                     ))}
                 </Grid>
-            </div>
-        </>
+
+        </Box>
 
 
     );

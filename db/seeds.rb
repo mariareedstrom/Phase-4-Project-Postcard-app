@@ -5,6 +5,7 @@ puts "🌱 Seeding your postcards..."
 Postcard.destroy_all
 Destination.destroy_all
 User.destroy_all
+Comment.destroy_all
 
 #Creating users
 bob = User.create(name: "Bob", username: "bob@gmail.com", password: "sosecure", picture: "https://images.pexels.com/photos/4588065/pexels-photo-4588065.jpeg?auto=compress&cs=tinysrgb&w=1600")

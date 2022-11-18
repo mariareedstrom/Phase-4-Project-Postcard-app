@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   end
 
   def invalid_record(invalid)
-    render json: invalid.record.errors, status: :unprocessable_entity
+    render json: invalid.record.errors.full_messages, status: :unprocessable_entity
   end
 
   def current_user
