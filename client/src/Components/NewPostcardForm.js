@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {Grid, MenuItem, Paper, TextField, Button} from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { MenuItem, Paper, TextField, Button } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import {Link, useNavigate} from "react-router-dom";
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
 import Typography from "@mui/material/Typography";
 
 function NewPostcardForm({user}) {
@@ -16,16 +15,13 @@ function NewPostcardForm({user}) {
     })
     const [errors, setErrors] = useState([])
 
-    const navigate = useNavigate()
-
     //to toggle dropdown vs destination input field
     const [isNewDestination, setIsNewDestination] = useState(false)
 
     //currently available destinations for dropdown
     const [availableDestinations, setAvailableDestinations] = useState([])
 
-
-
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -35,7 +31,7 @@ function NewPostcardForm({user}) {
             )
     }, [])
 
-    //display add new dest button
+    //display add new destination button
     function handleNewDestination() {
         setIsNewDestination(true)
     }
@@ -58,7 +54,7 @@ function NewPostcardForm({user}) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        // XXX: Allows for using existing or new destination
+
         const cleaned = {...formData}
         if(cleaned.destination_id) {
             delete cleaned.destination_attributes;
@@ -82,10 +78,7 @@ function NewPostcardForm({user}) {
                         setErrors(errorsData)
                     })
             })
-
     }
-
-
 
 
     return (
@@ -159,12 +152,12 @@ function NewPostcardForm({user}) {
                     </ul>
                 )}
                 <Box sx={{'& > :not(style)': {m: 1}}}>
-                    <Fab variant="extended" size="medium" color="primary" aria-label="submit" type="submit">
+                    <Button variant="contained" size="medium" color="primary" aria-label="submit" type="submit">
                         Submit
-                    </Fab>
-                    <Fab variant="extended" size="medium" color="primary" aria-label="add" component={Link} to="/">
+                    </Button>
+                    <Button variant="outlined" size="medium" color="error" aria-label="add" component={Link} to="/">
                         Cancel
-                    </Fab>
+                    </Button>
                 </Box>
             </Paper>
         </Box>

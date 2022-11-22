@@ -8,34 +8,32 @@ function NewCommentForm({comments, setComments, user, postcard}) {
         user_id: user.id,
         postcard_id: postcard.id
     })
-    const [errors, setErrors] =useState([])
+    const [errors, setErrors] = useState([])
 
 
-
-
-    function handleChange(e){
+    function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
 
         return fetch(`/api/comments/`, {
             method: "POST",
             headers: {
-                "Content-Type":"application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(formData)
         })
             .then(res => {
-                if (res.ok){
+                if (res.ok) {
                     res.json()
                         .then(data => {
                             setComments([...comments, data])
-                            setFormData({...formData, content:""})
+                            setFormData({...formData, content: ""})
                         })
                 } else {
-                    res.json().then((errorsData) =>{
+                    res.json().then((errorsData) => {
                         setErrors((errorsData))
                     })
                 }
@@ -43,38 +41,32 @@ function NewCommentForm({comments, setComments, user, postcard}) {
     }
 
 
-
-
     return (
 
         <Grid onSubmit={handleSubmit}>
-                <TextField onChange={(e) => handleChange(e)}
-                           label="new comment"
-                           name="content"
-                           value={formData.content}
-                           placeholder="add comment"
-                           fullWidth required/>
+            <TextField onChange={(e) => handleChange(e)}
+                       label="new comment"
+                       name="content"
+                       value={formData.content}
+                       placeholder="add comment"
+                       fullWidth required/>
             {errors.length > 0 && (
-                <ul style={{ color: "red" }}>
+                <ul style={{color: "red"}}>
                     {errors.map((error) => (
                         <li key={error}>{error}</li>
                     ))}
                 </ul>
             )}
 
-                <Button type="submit"
-                        onClick={handleSubmit}
-                        color="primary"
+            <Button type="submit"
+                    onClick={handleSubmit}
+                    color="primary"
 
-                        fullWidth required
-                        variant="outlined">
-                    Submit
-                </Button>
-
-
+                    fullWidth required
+                    variant="outlined">
+                Submit
+            </Button>
         </Grid>
-
-
     );
 }
 

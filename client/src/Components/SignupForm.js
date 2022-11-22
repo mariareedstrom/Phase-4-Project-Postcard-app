@@ -43,7 +43,6 @@ function SignupForm({setCurrentUser}) {
     }
 
 
-    const buttonStyle = {margin: "8px, 0"}
 
     return (
 
@@ -99,7 +98,7 @@ function SignupForm({setCurrentUser}) {
                            fullWidth required/>
                 <Button type="submit"
                         color="primary"
-                        style={buttonStyle}
+                        sx={{margin: "8px, 0"}}
                         fullWidth required
                         variant="contained">
                     Sign Up!
@@ -112,8 +111,6 @@ function SignupForm({setCurrentUser}) {
 
 
     );
-
-
 }
 
 export default SignupForm;

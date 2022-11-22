@@ -4,12 +4,12 @@ import LoginForm from "../Components/LoginForm";
 import SignupForm from "../Components/SignupForm";
 
 
-function LoggedOut({ setCurrentUser }) {
+function LoggedOut({setCurrentUser}) {
     return (
         <div>
             <Routes>
-                <Route exact path = "/" element={ <LoginForm setCurrentUser = {setCurrentUser} /> }/>
-                <Route exact path = "/signup" element={ <SignupForm setCurrentUser = {setCurrentUser} /> }/>
+                <Route exact path="/" element={<LoginForm setCurrentUser={setCurrentUser}/>}/>
+                <Route exact path="/signup" element={<SignupForm setCurrentUser={setCurrentUser}/>}/>
             </Routes>
         </div>
     );

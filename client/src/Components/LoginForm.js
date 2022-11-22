@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {Grid, Paper, Avatar, TextField, Button, Typography, Link} from "@mui/material";
+import {Paper, TextField, Button, Typography, Link} from "@mui/material";
 import {Link as RouterLink} from 'react-router-dom'
-import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import {Box} from "@mui/material";
 
 
@@ -10,7 +9,6 @@ function LoginForm({setCurrentUser}) {
         username: "",
         password: ""
     })
-
 
     function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -35,7 +33,6 @@ function LoginForm({setCurrentUser}) {
                         console.error(errors)
                     })
             })
-
     }
 
 
@@ -90,11 +87,7 @@ function LoginForm({setCurrentUser}) {
                 <Link component={RouterLink} to="/signup" sx={{marginLeft: '1em'}}>Sign Up</Link>
             </Paper>
         </Box>
-
-
     );
-
-
 }
 
 export default LoginForm;

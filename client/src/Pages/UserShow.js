@@ -10,7 +10,6 @@ function UserShow({currentUser}) {
 
 
     return (
-
         <Box>
             < Box sx={{maxWidth: "550px", margin: "0 auto"}}>
                 <Box sx={{
@@ -36,7 +35,7 @@ function UserShow({currentUser}) {
                              src={currentUser.picture}/>
                     </Box>
                     <Box>
-                        <Typography variant="h4"  gutterBottom sx={{marginTop: '16px'}}>
+                        <Typography variant="h4" gutterBottom sx={{marginTop: '16px'}}>
                             Postcards from {name}
                         </Typography>
 
@@ -58,19 +57,15 @@ function UserShow({currentUser}) {
                     </Box>
                 </Box>
             </Box>
+            <Grid container spacing={4}>
+                {postcards.map((postcard) => (
 
-                <Grid container spacing={4}>
-                    {postcards.map((postcard) => (
-
-                        <Grid item display="flex" key={postcard.id}>
-                            <PostCard postcard={postcard}/>
-                        </Grid>
-                    ))}
-                </Grid>
-
+                    <Grid item display="flex" key={postcard.id}>
+                        <PostCard postcard={postcard}/>
+                    </Grid>
+                ))}
+            </Grid>
         </Box>
-
-
     );
 }
 

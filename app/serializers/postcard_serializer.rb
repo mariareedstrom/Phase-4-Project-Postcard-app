@@ -6,5 +6,4 @@ class PostcardSerializer < ActiveModel::Serializer
   has_many :comments
 
 
-
 end

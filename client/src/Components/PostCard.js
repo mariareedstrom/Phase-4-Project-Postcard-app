@@ -14,9 +14,9 @@ import {useNavigate} from "react-router-dom";
 function PostCard({postcard}) {
     const {user, image_url, greeting, destination, id, created_at} = postcard
 
-
     const navigate = useNavigate()
 
+    //dropdown functionality
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (e) => {
@@ -83,8 +83,6 @@ function PostCard({postcard}) {
                 </Typography>
             </CardContent>
         </Card>
-
-
     );
 }
 

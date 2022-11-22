@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     resources :postcards, only: [:index, :create, :show, :destroy] do
       resources :favorites, only: [:create, :destroy]
+      # resources :comments, only: [:index, :show]
     end
 
     resources :users, only: [:index, :show, :destroy, :update ]

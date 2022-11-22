@@ -5,7 +5,7 @@ class Api::PostcardsController < ApplicationController
 
   def index
     postcards = Postcard.all
-    render json: postcards, include: [:user, :destination, :comments], status: :ok
+    render json: postcards, status: :ok
   end
 
   def create
@@ -14,7 +14,7 @@ class Api::PostcardsController < ApplicationController
   end
 
   def show
-    render json: @postcard, include: [:user, :destination, :comments, :favorites], status: :ok
+    render json: @postcard, status: :ok
   end
 
   def update

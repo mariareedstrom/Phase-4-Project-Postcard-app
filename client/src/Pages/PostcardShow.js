@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, Collapse, Container} from "@mui/material";
+import {Box, Button, Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -79,7 +79,6 @@ function PostcardShow({user}) {
     }
 
     function handleFavoriteClick() {
-
         if (myFavorite) {
             fetch(`/api/postcards/${postcardId}/favorites/${myFavorite.id}`, {
                 method: "DELETE",
@@ -105,14 +104,14 @@ function PostcardShow({user}) {
                 .then((res) => {
                     if (res.ok) {
                         setFavoriteCount(favoriteCount + 1)
-                        res.json().then((data) => setMyFavorite(data) )
+                        res.json().then((data) => setMyFavorite(data))
                     }
                 })
 
         }
     }
 
-    function handleDeletePostcard(){
+    function handleDeletePostcard() {
         fetch(`/api/postcards/${postcardId}`, {
             method: "DELETE",
         })
@@ -125,7 +124,7 @@ function PostcardShow({user}) {
 
             <Card sx={{maxWidth: 500}}>
                 <CardHeader
-                    avatar={ <Avatar  aria-label={user.name} src={user.picture}></Avatar>}
+                    avatar={<Avatar aria-label={user.name} src={user.picture}></Avatar>}
                     title={destination.name}
 
                     subheader="September 14, 2016"
@@ -143,13 +142,14 @@ function PostcardShow({user}) {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="favorite" onClick={handleFavoriteClick}>
-                        <FavoriteIcon htmlColor={myFavorite ? 'red' : ''}/>
+                        <FavoriteIcon htmlColor={myFavorite ? '#2196f3' : ''}/>
                         <span>{favoriteCount}</span>
                     </IconButton>
 
-                    {user.id === postcard.user.id ? <Button onClick={handleDeletePostcard} variant="outlined" startIcon={<DeleteIcon />}>
-                        Delete
-                    </Button> : null}
+                    {user.id === postcard.user.id ?
+                        <Button onClick={handleDeletePostcard} variant="outlined" color="error" startIcon={<DeleteIcon/>}>
+                            Delete
+                        </Button> : null}
 
                     <ExpandMore
                         expand={expanded}
@@ -162,17 +162,22 @@ function PostcardShow({user}) {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <Typography paragraph>Comments:</Typography>
+
+                        <Typography variant="overline" color="text.secondary">Comments:</Typography>
 
                         {comments.map((comment) =>
-                            (<Typography paragraph>
-                                {comment.content}
-                                -{comment.user.name}
-                                {comment.user.id === user.id ?
-                                    <DeleteOutlineIcon onClick={handleDelete(comment.id)}/>
-                                    : null
-                                }
-                            </Typography>))
+                            (<Box display="block">
+                                <Typography variant="subtitle1"
+                                            sx={{borderTop: "1px solid", borderColor: "text.secondary"}}>
+                                    {comment.content}
+                                </Typography>
+                                <Typography>
+                                    - {comment.user.name}
+                                    {comment.user.id === user.id ?
+                                        <DeleteOutlineIcon fontSize="string" color="error" onClick={handleDelete(comment.id)}/>
+                                        : null}
+                                </Typography>
+                            </Box>))
                         }
                         <NewCommentForm comments={comments} setComments={setComments} user={user} postcard={postcard}/>
                     </CardContent>

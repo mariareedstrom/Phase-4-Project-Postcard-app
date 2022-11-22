@@ -16,7 +16,6 @@ function Header({currentUser, handleLogout}) {
         navigate(`/users/${currentUser.id}`)
     }
 
-
     return (
 
         <AppBar position="static" sx={{marginBottom: "36px", bgcolor: "#fff"}}>
@@ -27,18 +26,19 @@ function Header({currentUser, handleLogout}) {
                             <img alt="logo" src="/postcard-logo.png"
                                  style={{objectPosition: '0 -30px', height: '120px'}}/>
                         </div>
-
                     </Link>
 
-                    <Button variant="outlined" color="primary" aria-label="add postcard" sx={{margin: "12px"}} onClick={handleSendPostcard}>
+                    <Button variant="outlined" color="primary" aria-label="add postcard" sx={{margin: "12px"}}
+                            onClick={handleSendPostcard}>
                         <SendIcon sx={{mr: 1}}/>
                         Send Postcard
                     </Button>
 
-                    <Button variant="outlined" color="primary" sx={{margin: "12px"}} onClick={handleLogout}>Logout</Button>
+                    <Button variant="outlined" color="primary" sx={{margin: "12px"}}
+                            onClick={handleLogout}>Logout</Button>
 
-
-                    <Avatar alt={`${currentUser.name}`} src={currentUser.picture}  sx={{margin: "12px"}} onClick={handleViewUser}/>
+                    <Avatar alt={`${currentUser.name}`} src={currentUser.picture} sx={{margin: "12px"}}
+                            onClick={handleViewUser}/>
 
 
                 </Toolbar>
