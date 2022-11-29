@@ -10,6 +10,13 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {Box, Menu, MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
+function formatDate(date) {
+    const event = new Date(date)
+    const options = {year: 'numeric', month: 'long', day: 'numeric'}
+    const locale = document.querySelector('html').lang
+
+    return event.toLocaleDateString(locale, options)
+}
 
 function PostCard({postcard}) {
     const {user, image_url, greeting, destination, id, created_at} = postcard
@@ -26,15 +33,6 @@ function PostCard({postcard}) {
         setAnchorEl(null);
         navigate(`/postcards/${id}`)
     };
-
-    function formatDate(date) {
-        const event = new Date(date)
-        const options = {year: 'numeric', month: 'long', day: 'numeric'}
-        const locale = document.querySelector('html').lang
-
-        return event.toLocaleDateString(locale, options)
-    }
-
 
     return (
         <Card sx={{maxWidth: 345}}>
@@ -87,3 +85,4 @@ function PostCard({postcard}) {
 }
 
 export default PostCard;
+export { formatDate };

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {Box, Button, Collapse, Container} from "@mui/material";
+import {Badge, Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,12 +10,13 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Avatar from "@mui/material/Avatar";
 import {styled} from '@mui/material/styles';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
-import NewCommentForm from "../Components/NewCommentForm";
 
+import NewCommentForm from "../Components/NewCommentForm";
+import {formatDate} from "../Components/PostCard";
+import Comment from "../Components/Comment"
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props;
@@ -29,7 +30,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-function PostcardShow({user}) {
+function PostcardShow({currentUser}) {
     const [postcard, setPostcard] = useState(null)
     const [comments, setComments] = useState([]);
     const [isLoaded, setIsLoaded] = useState(null)
@@ -55,9 +56,9 @@ function PostcardShow({user}) {
                 setComments(data.comments);
                 setIsLoaded(true);
                 setFavoriteCount(data.favorites.length);
-                setMyFavorite(data.favorites.find(({user_id}) => user_id === user.id))
+                setMyFavorite(data.favorites.find(({user_id}) => user_id === currentUser.id))
             });
-    }, [postcardId]);
+    }, [postcardId, currentUser.id]);
 
 
     if (!isLoaded) return <h3>Greetings coming your way....</h3>;
@@ -88,17 +89,15 @@ function PostcardShow({user}) {
                         setFavoriteCount(favoriteCount - 1)
                         setMyFavorite(null)
                     }
-
                 })
         } else {
-
             fetch(`/api/postcards/${postcardId}/favorites`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: user.id,
+                    user_id: currentUser.id,
                 })
             })
                 .then((res) => {
@@ -121,19 +120,23 @@ function PostcardShow({user}) {
 
     return (
         <Container maxWidth="sm">
-
-            <Card sx={{maxWidth: 500}}>
-                <CardHeader
-                    avatar={<Avatar aria-label={user.name} src={user.picture}></Avatar>}
-                    title={destination.name}
-
-                    subheader="September 14, 2016"
-                />
+            <Card>
                 <CardMedia
                     component="img"
-                    height="194"
                     image={image_url}
                     alt="postcard image"
+                />
+                <CardHeader
+                    avatar={<Avatar aria-label={currentUser.name} src={currentUser.picture}></Avatar>}
+                    title={destination.name}
+                    titleTypographyProps={{variant: 'h5'}}
+                    action={
+                        currentUser.id === postcard.user.id ?
+                            <IconButton onClick={handleDeletePostcard} color="error">
+                                <DeleteOutlineIcon/>
+                            </IconButton> : null
+                    }
+                    subheader={formatDate(postcard.created_at)}
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
@@ -141,15 +144,11 @@ function PostcardShow({user}) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="favorite" onClick={handleFavoriteClick}>
-                        <FavoriteIcon htmlColor={myFavorite ? '#2196f3' : ''}/>
-                        <span>{favoriteCount}</span>
-                    </IconButton>
-
-                    {user.id === postcard.user.id ?
-                        <Button onClick={handleDeletePostcard} variant="outlined" color="error" startIcon={<DeleteIcon/>}>
-                            Delete
-                        </Button> : null}
+                    <Badge badgeContent={favoriteCount} color="primary">
+                        <IconButton aria-label="favorite" onClick={handleFavoriteClick}>
+                            <FavoriteIcon color={myFavorite ? 'error' : ''}/>
+                        </IconButton>
+                    </Badge>
 
                     <ExpandMore
                         expand={expanded}
@@ -163,23 +162,20 @@ function PostcardShow({user}) {
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
 
-                        <Typography variant="overline" color="text.secondary">Comments:</Typography>
+                        <Typography variant="h6" color="text.secondary">Comments</Typography>
 
-                        {comments.map((comment) =>
-                            (<Box display="block">
-                                <Typography variant="subtitle1"
-                                            sx={{borderTop: "1px solid", borderColor: "text.secondary"}}>
-                                    {comment.content}
-                                </Typography>
-                                <Typography>
-                                    - {comment.user.name}
-                                    {comment.user.id === user.id ?
-                                        <DeleteOutlineIcon fontSize="string" color="error" onClick={handleDelete(comment.id)}/>
-                                        : null}
-                                </Typography>
-                            </Box>))
-                        }
-                        <NewCommentForm comments={comments} setComments={setComments} user={user} postcard={postcard}/>
+                        <ul style={{padding:0, listStyle:"none"}}>
+                            {comments.map((comment) => (
+                                <Comment key={comment.id}
+                                         comment={comment}
+                                         currentUser={currentUser}
+                                         component="li"
+                                         onDeleteComment={handleDelete}
+                                         sx={{display:'flex', flexDirection:'row'}}  />
+                            ))}
+                        </ul>
+                        <NewCommentForm comments={comments} setComments={setComments} user={currentUser}
+                                        postcard={postcard}/>
                     </CardContent>
                 </Collapse>
             </Card>
