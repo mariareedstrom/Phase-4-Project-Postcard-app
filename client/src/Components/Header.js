@@ -1,3 +1,5 @@
+import {logo} from './Header.module.css';
+
 import React from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import {AppBar, Toolbar, Button, Avatar, Container} from "@mui/material";
@@ -17,12 +19,11 @@ function Header({currentUser, handleLogout}) {
     }
 
     return (
-
         <AppBar position="static" sx={{marginBottom: "36px", bgcolor: "#fff"}}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Link to={`/`} style={{flex: 1}}>
-                        <div style={{height: '60px', overflow: 'hidden'}}>
+                        <div className={logo}>
                             <img alt="logo" src="/postcard-logo.png"
                                  style={{objectPosition: '0 -30px', height: '120px'}}/>
                         </div>

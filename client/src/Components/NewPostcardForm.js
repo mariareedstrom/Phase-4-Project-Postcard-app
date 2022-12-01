@@ -5,13 +5,13 @@ import {Link, useNavigate} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
 
-function NewPostcardForm({user}) {
+function NewPostcardForm({currentUser}) {
     const [formData, setFormData] = useState({
         destination_id: null,
         destination_attributes: null,
         greeting: "",
         image_url: "",
-        user_id: user.id
+        user_id: currentUser.id
     })
     const [errors, setErrors] = useState([])
 
@@ -94,7 +94,7 @@ function NewPostcardForm({user}) {
                        display: 'flex',
                        flex: 1,
                        flexDirection: 'column',
-                       gap: '12px',
+                       gap: '24px',
                        maxWidth: '650px',
                        padding: '20px'
 

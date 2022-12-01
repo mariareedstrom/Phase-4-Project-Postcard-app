@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {Badge, Collapse, Container} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Avatar from "@mui/material/Avatar";
 import {styled} from '@mui/material/styles';
 
@@ -132,7 +133,7 @@ function PostcardShow({currentUser}) {
                     titleTypographyProps={{variant: 'h5'}}
                     action={
                         currentUser.id === postcard.user.id ?
-                            <IconButton onClick={handleDeletePostcard} color="error">
+                            <IconButton onClick={handleDeletePostcard} color="error" >
                                 <DeleteOutlineIcon/>
                             </IconButton> : null
                     }
@@ -149,6 +150,16 @@ function PostcardShow({currentUser}) {
                             <FavoriteIcon color={myFavorite ? 'error' : ''}/>
                         </IconButton>
                     </Badge>
+                    {
+                        currentUser.id === postcard.user.id ?
+                            <IconButton color="error"
+                                        component={Link}
+                                        to={{pathname: `/postcards/${postcardId}/edit`}}
+                                        state={{postcard}}
+                            >
+                                <EditOutlinedIcon/>
+                            </IconButton> : null
+                    }
 
                     <ExpandMore
                         expand={expanded}

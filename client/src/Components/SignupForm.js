@@ -58,7 +58,7 @@ function SignupForm({setCurrentUser}) {
                        display: "flex",
                        flex:1,
                        flexDirection: "column",
-                       gap: "12px",
+                       gap: "24px",
                        padding: '20px',
                        maxWidth: '320px',
                    }}>

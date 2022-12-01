@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Paper, TextField, Button, Typography, Link} from "@mui/material";
 import {Link as RouterLink} from 'react-router-dom'
-import {Box} from "@mui/material";
+import {Box, Alert} from "@mui/material";
 
 
 function LoginForm({setCurrentUser}) {
@@ -9,6 +9,7 @@ function LoginForm({setCurrentUser}) {
         username: "",
         password: ""
     })
+    const [errors, setErrors] = useState([])
 
     function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -29,8 +30,8 @@ function LoginForm({setCurrentUser}) {
                         setCurrentUser(user)
                     })
                 } else
-                    res.json().then((errors) => {
-                        console.error(errors)
+                    res.json().then((errorData) => {
+                        setErrors(Object.values(errorData))
                     })
             })
     }
@@ -50,7 +51,7 @@ function LoginForm({setCurrentUser}) {
                        display: 'flex',
                        flex: 1,
                        flexDirection: 'column',
-                       gap: '12px',
+                       gap: '24px',
                        padding: '20px',
                        maxWidth: '320px'
                    }}>
@@ -61,6 +62,16 @@ function LoginForm({setCurrentUser}) {
                     </Box>
                     <Typography variant={"h6"}>Sign In</Typography>
                 </Box>
+
+                {errors.length > 0 && (
+                    <ul >
+                        {errors.map((error, i) => (
+                            <li key={i}>
+                                <Alert severity="error">{error}</Alert>
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
                 <TextField onChange={(e) => handleChange(e)}
                            label="Username"
@@ -75,6 +86,9 @@ function LoginForm({setCurrentUser}) {
                            placeholder="enter password"
                            type="password"
                            fullWidth required/>
+
+
+
                 <Button type="submit"
                         color="primary"
                         fullWidth required

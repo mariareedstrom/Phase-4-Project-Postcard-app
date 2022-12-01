@@ -19,7 +19,7 @@ function PostcardIndex({currentUser}) {
 
     return (
 
-        <Box sx={{display: 'flex'}}>
+        <Box display="flex" >
             <Grid container spacing={4}>
                 {postcards.map((postcard) => (
                     <Grid item display="flex" key={postcard.id}>

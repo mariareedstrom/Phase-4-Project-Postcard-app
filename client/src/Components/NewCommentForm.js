@@ -31,6 +31,7 @@ function NewCommentForm({comments, setComments, user, postcard}) {
                         .then(data => {
                             setComments([...comments, data])
                             setFormData({...formData, content: ""})
+                            setErrors([])
                         })
                 } else {
                     res.json().then((errorsData) => {

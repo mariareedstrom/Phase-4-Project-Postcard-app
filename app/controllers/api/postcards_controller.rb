@@ -18,7 +18,8 @@ class Api::PostcardsController < ApplicationController
   end
 
   def update
-    @postcard.update(postcard_params)
+    @postcard.update!(postcard_params)
+    render json: @postcard, status: :ok
   end
 
   def destroy
@@ -39,7 +40,7 @@ class Api::PostcardsController < ApplicationController
 
   def is_authorized
     permitted = current_user.admin? || @postcard.user == current_user
-    render json: "Accessibility is not permitted", status: :forbidden unless permitted
+    render json: "Action is not permitted", status: :forbidden unless permitted
   end
 
 end
