@@ -5,8 +5,8 @@ import Grid from "@mui/material/Grid";
 import PostCard from "../Components/PostCard";
 
 function UserShow({currentUser}) {
-    const {name, postcards, id, comments} = currentUser
-    const destinations = postcards.map(card => card.destination)
+    const {name, postcards, id, comments, destinations} = currentUser
+
 
 
     return (

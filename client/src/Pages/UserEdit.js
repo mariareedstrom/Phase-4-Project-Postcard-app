@@ -4,48 +4,32 @@ import Typography from "@mui/material/Typography";
 import {Box, Button, Paper, TextField} from "@mui/material";
 
 
-function UserEdit() {
-    const userId = useParams().id
+function UserEdit({currentUser, setCurrentUser}) {
     const navigate = useNavigate()
 
-    const [user, setUser] = useState({
-        name: "",
-        username: "",
-        picture: "",
-        id: null
-    })
-
-    useEffect(() => {
-        fetch(`/api/users/${userId}`)
-            .then(res => res.json())
-            .then((data) => setUser(data))
-    }, [userId])
-
-
     function handleChange(e) {
-        setUser({...user, [e.target.name]: e.target.value})
+        setCurrentUser({...currentUser, [e.target.name]: e.target.value})
     }
-
 
     function handleSubmit(e) {
         e.preventDefault()
 
-        return fetch(`/api/users/${userId}`, {
+        return fetch(`/api/users/${currentUser.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(currentUser)
         })
             .then(res => res.json())
             .then(data => {
-                setUser(data)
-                navigate(`/users/${userId}`)
+                setCurrentUser(data)
+                navigate(`/users/${currentUser.id}`)
             })
     }
 
     function handleFromCancel() {
-        navigate(`/users/${userId}`)
+        navigate(`/users/${currentUser.id}`)
     }
 
     return (
@@ -62,7 +46,7 @@ function UserEdit() {
                        display: 'flex',
                        flex: 1,
                        flexDirection: 'column',
-                       gap: '12px',
+                       gap: '24px',
                        padding: '20px',
                        maxWidth: '320px'
                    }}>
@@ -72,19 +56,19 @@ function UserEdit() {
                 <TextField onChange={(e) => handleChange(e)}
                            label="Name"
                            name="name"
-                           value={user.name}
+                           value={currentUser.name}
                            placeholder="enter name"
                            fullWidth required/>
                 <TextField onChange={(e) => handleChange(e)}
                            label="Username"
                            name="username"
-                           value={user.username}
+                           value={currentUser.username}
                            placeholder="enter username"
                            fullWidth required/>
                 <TextField onChange={(e) => handleChange(e)}
                            label="picture"
                            name="picture"
-                           value={user.picture}
+                           value={currentUser.picture}
                            placeholder="picture url"
                            type="url"
                            fullWidth required/>

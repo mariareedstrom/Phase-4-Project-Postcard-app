@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
 
-    resources :postcards, only: [:index, :create, :show, :destroy] do
+    resources :postcards, only: [:index, :create, :show, :destroy, :update] do
       resources :favorites, only: [:create, :destroy]
       # resources :comments, only: [:index, :show]
     end

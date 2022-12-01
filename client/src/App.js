@@ -1,7 +1,10 @@
 import './App.css';
+
 import React from "react";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import {Container} from "@mui/material";
+
 import Header from "./Components/Header";
 import LoggedIn from "./Pages/LoggedIn";
 import LoggedOut from "./Pages/LoggedOut";
@@ -10,10 +13,7 @@ import SignupForm from "./Components/SignupForm";
 import UserEdit from "./Pages/UserEdit";
 import PostcardShow from "./Pages/PostcardShow";
 import NewPostcardForm from "./Components/NewPostcardForm";
-import {Container} from "@mui/material";
-
-
-
+import PostcardEdit from "./Pages/PostcardEdit";
 
 
 function App() {
@@ -30,56 +30,54 @@ function App() {
                         setCurrentUser(user)
                         setAuthenticated(true)
                     })
-                }else {
+                } else {
                     setAuthenticated(true)
                 }
             })
     }, [])
 
-if(!authenticated){
-    return <div></div>
-}
+    if (!authenticated) {
+        return <div></div>
+    }
 
-    function handleLogout(){
+    function handleLogout() {
         setCurrentUser(null)
         fetch('/api/logout', {method: "DELETE"})
         navigate(`/`)
 
     }
 
-    function onAddToFavorites(postcard){
 
-    }
-
-  return (
-    <>
-        {currentUser? <Header currentUser={currentUser} handleLogout={handleLogout} /> : null }
-        <Container maxWidth="xl">
-          <main className="App" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
-              <Routes>
-                  <Route path="/" element=
-                      { currentUser? (
-                          <LoggedIn
-                              setCurrentUser ={setCurrentUser}
-                              currentUser = {currentUser}
-                          />
-                      ) : (
-                          <LoggedOut
-                              setCurrentUser = {setCurrentUser}
-                          />
-                      )}
-                      />
-                  <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>} />
-                  <Route path="/signup" element={ <SignupForm setCurrentUser={setCurrentUser} />} />
-                  <Route path="/users/:id/edit" element={ <UserEdit user={currentUser} /> } />
-                  <Route path="/postcards/:id" element={<PostcardShow user={currentUser} onAddToFavorites={onAddToFavorites()}/> } />
-                  <Route path="/postcards/new" element={<NewPostcardForm user ={currentUser} />} />
-              </Routes>
-
-        </main>
-        </Container>
-    </>
-  );
+    return (
+        <>
+            {currentUser ? <Header currentUser={currentUser} handleLogout={handleLogout}/> : null}
+            <Container maxWidth="xl">
+                <main className="App" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
+                    <Routes>
+                        <Route path="/" element=
+                            {currentUser ? (
+                                <LoggedIn
+                                    setCurrentUser={setCurrentUser}
+                                    currentUser={currentUser}
+                                />
+                            ) : (
+                                <LoggedOut
+                                    setCurrentUser={setCurrentUser}
+                                />
+                            )}
+                        />
+                        <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>}/>
+                        <Route path="/signup" element={<SignupForm setCurrentUser={setCurrentUser}/>}/>
+                        <Route path="/users/:id/edit"
+                               element={<UserEdit currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
+                        <Route path="/postcards/:id" element={<PostcardShow currentUser={currentUser}/>}/>
+                        <Route path="/postcards/new" element={<NewPostcardForm currentUser={currentUser}/>}/>
+                        <Route path="/postcards/:id/edit" element={<PostcardEdit/>} />
+                    </Routes>
+                </main>
+            </Container>
+        </>
+    );
 }
 
 export default App;
