@@ -64,7 +64,7 @@ function PostcardShow({currentUser}) {
 
     if (!isLoaded) return <h3>Greetings coming your way....</h3>;
 
-    const {image_url, greeting, destination} = postcard
+    const {image_url, greeting, destination, user} = postcard
 
 
     function handleDelete(comment_id) {
@@ -128,7 +128,7 @@ function PostcardShow({currentUser}) {
                     alt="postcard image"
                 />
                 <CardHeader
-                    avatar={<Avatar aria-label={currentUser.name} src={currentUser.picture}></Avatar>}
+                    avatar={<Avatar aria-label={user.name} src={user.picture}></Avatar>}
                     title={destination.name}
                     titleTypographyProps={{variant: 'h5'}}
                     action={
