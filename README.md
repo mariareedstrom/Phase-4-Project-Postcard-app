@@ -44,9 +44,15 @@ git push heroku main
 > `highligthed like this` or `highlighted`. 
 
 
-- [Deploying a Rails 6 App to Heroku][heroku rails deploying guide]
-- [Rails Troubleshooting on Heroku][troubleshooting guide on heroku]
+# Attribution
+[ruby](https://www.ruby-lang.org/en/)
 
-[postgres downloads page]: https://postgresapp.com/downloads.html
-[heroku rails deploying guide]: https://devcenter.heroku.com/articles/getting-started-with-rails6
-[troubleshooting guide on heroku]: https://devcenter.heroku.com/articles/getting-started-with-rails6#troubleshooting
+[rails](https://guides.rubyonrails.org/v5.0/index.html)
+
+[create-react-app](https://create-react-app.dev/)
+
+[react router](https://reactrouter.com/)
+
+[render](https://render.com/)
+
+[postgresql](https://www.postgresql.org/)
