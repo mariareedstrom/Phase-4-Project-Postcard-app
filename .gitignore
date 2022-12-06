@@ -32,3 +32,5 @@
 /.idea
 /coverage/.resultset.json.lock
 /coverage/.last_run.json
+
+/node_modules
