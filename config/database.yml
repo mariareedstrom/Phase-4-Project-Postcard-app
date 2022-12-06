@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['POSTCARD_DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>
 
 
