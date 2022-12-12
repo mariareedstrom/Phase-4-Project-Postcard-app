@@ -1,5 +1,4 @@
 import {logo} from './Header.module.css';
-
 import React from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import {AppBar, Toolbar, Button, Avatar, Container} from "@mui/material";
@@ -40,8 +39,6 @@ function Header({currentUser, handleLogout}) {
 
                     <Avatar alt={`${currentUser.name}`} src={currentUser.picture} sx={{margin: "12px"}}
                             onClick={handleViewUser}/>
-
-
                 </Toolbar>
             </Container>
         </AppBar>

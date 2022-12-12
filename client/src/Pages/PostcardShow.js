@@ -14,7 +14,6 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Avatar from "@mui/material/Avatar";
 import {styled} from '@mui/material/styles';
-
 import NewCommentForm from "../Components/NewCommentForm";
 import {formatDate} from "../Components/PostCard";
 import Comment from "../Components/Comment"
@@ -38,7 +37,6 @@ function PostcardShow({currentUser}) {
     const [expanded, setExpanded] = useState(false);
     const [favoriteCount, setFavoriteCount] = useState(0)
     const [myFavorite, setMyFavorite] = useState(null)
-
 
     const postcardId = useParams().id
     const navigate = useNavigate()

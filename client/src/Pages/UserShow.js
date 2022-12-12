@@ -8,7 +8,6 @@ function UserShow({currentUser}) {
     const {name, postcards, id, comments, destinations} = currentUser
 
 
-
     return (
         <Box>
             < Box sx={{maxWidth: "550px", margin: "0 auto"}}>

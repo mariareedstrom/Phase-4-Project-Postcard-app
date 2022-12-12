@@ -11,7 +11,6 @@ function PostcardEdit() {
     const location = useLocation();
     const { postcard } = location.state;
 
-
     const [formData, setFormData] = useState({
         greeting: postcard.greeting,
         image_url: postcard.image_url
@@ -19,7 +18,6 @@ function PostcardEdit() {
 
     const navigate = useNavigate()
 
-    console.log(postcard)
 
     function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})

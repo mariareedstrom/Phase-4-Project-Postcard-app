@@ -57,17 +57,17 @@ p14 = Postcard.create(user_id: erik.id, destination_id: bahrain.id, greeting: "H
 
 #Creating comments
 c1 = Comment.create(postcard_id: p1.id, user_id: erik.id, content: "This looks like a great trip! Thanks for the postcard!")
-c2 = Comment.create(postcard_id: p2, user_id: maria.id, content: "Thanks for sharing! I would love to go there one day! It sounds like so much fun")
+c2 = Comment.create(postcard_id: p2.id, user_id: maria.id, content: "Thanks for sharing! I would love to go there one day! It sounds like so much fun")
 c3 = Comment.create(postcard_id: p1.id, user_id: maria.id, content: "Cool! Did you get to see the park with all the statues?")
-c4 = Comment.create(postcard_id: p3, user_id: bob.id, content: "Tampa is on my list! Was it very warm? I want to go next spring.")
-c5 = Comment.create(postcard_id: p4, user_id: maria.id, content: "I love Santa Barbara! Make sure you get on a boat ride to see all the dolphins and sea lions. Downtown has lots of great restaurants to try. Also, I recommend a day trip to the wine country. Have fun! ")
-c6 = Comment.create(postcard_id: p2, user_id: bob.id, content: "Hola amigo! Way to practice your Spanish! Can't wait to hear all about it when you come home. Salut!")
-c7 = Comment.create(postcard_id: p5, user_id: erik.id, content: "Howdy Partner!")
-c7 = Comment.create(postcard_id: p5, user_id: alexa.id, content: "Cool, I'm going there for a convention next week!")
-c8 = Comment.create(postcard_id: p6, user_id: bill.id, content: "Have fun buddy!")
-c9 = Comment.create(postcard_id: p7, user_id: bob.id, content: "Did you see any longhorns yet?")
-c10 = Comment.create(postcard_id: p8, user_id: sonder.id, content: "Looks like a great trip")
-c11 = Comment.create(postcard_id: p9, user_id: alexa.id, content: "Say hi to the Pope for me ;)")
-c12 = Comment.create(postcard_id: p10, user_id: maria.id, content: "You have to try the red hotdogs there. And they do great breakfast too!")
+c4 = Comment.create(postcard_id: p3.id, user_id: bob.id, content: "Tampa is on my list! Was it very warm? I want to go next spring.")
+c5 = Comment.create(postcard_id: p4.id, user_id: maria.id, content: "I love Santa Barbara! Make sure you get on a boat ride to see all the dolphins and sea lions. Downtown has lots of great restaurants to try. Also, I recommend a day trip to the wine country. Have fun! ")
+c6 = Comment.create(postcard_id: p2.id, user_id: bob.id, content: "Hola amigo! Way to practice your Spanish! Can't wait to hear all about it when you come home. Salut!")
+c7 = Comment.create(postcard_id: p5.id, user_id: erik.id, content: "Howdy Partner!")
+c7 = Comment.create(postcard_id: p5.id, user_id: alexa.id, content: "Cool, I'm going there for a convention next week!")
+c8 = Comment.create(postcard_id: p6.id, user_id: bill.id, content: "Have fun buddy!")
+c9 = Comment.create(postcard_id: p7.id, user_id: bob.id, content: "Did you see any longhorns yet?")
+c10 = Comment.create(postcard_id: p8.id, user_id: sonder.id, content: "Looks like a great trip")
+c11 = Comment.create(postcard_id: p9.id, user_id: alexa.id, content: "Say hi to the Pope for me ;)")
+c12 = Comment.create(postcard_id: p10.id, user_id: maria.id, content: "You have to try the red hotdogs there. And they do great breakfast too!")
 
 puts "🌱Done Seeding 🌱"
