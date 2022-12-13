@@ -17,7 +17,7 @@ Easy modern day technology, sprinkled with some good old nostalgia.
 
 ## Feature Highlights
 
-### Login and Signup
+#### Login and Signup
 ![login:signup.jpg](docs/login:signup.jpg)
 
 In this application users can sign up to create an account, log in with a secure password and remain logged in while
@@ -25,19 +25,17 @@ navigating the pages of the application. Authentication and authorization is imp
 CookieStore to persist user information. 
 
 
-### View, create, edit and delete Postcards
+#### View, create, edit and delete Postcards
 ![index.png](docs/index.png)
 Once logged in, users can view all postcards as well as create and share their own postcards. Authorization permits
 the current user to edit or delete postcards they have created. 
 
 
 
-### View, create and delete Comments
-![postcardView2.png](docs/postcardView2.png)
+#### View, create and delete Comments
+![comment.png](docs/comment.png)
 Users can view all postcard comments and create a their own comment to any postcard. Authorization permits the current 
 user to delete their own comments.
-
-
 
 
 ## Local Development
