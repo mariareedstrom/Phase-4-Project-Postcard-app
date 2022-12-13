@@ -35,7 +35,7 @@ function PostcardEdit() {
         })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(() => navigate("/"))
+                    res.json().then(() => navigate(`/postcards/${postcard.id}`))
                 } else {
                     res.json().then((errorsData) => setErrors(errorsData))
                 }

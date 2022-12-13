@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Grid, TextField} from "@mui/material";
+import {bottomNavigationActionClasses, Box, Button, Grid, TextField} from "@mui/material";
 
 
 function NewCommentForm({comments, setComments, user, postcard}) {
@@ -44,13 +44,14 @@ function NewCommentForm({comments, setComments, user, postcard}) {
 
     return (
 
-        <Grid onSubmit={handleSubmit}>
+        <Box onSubmit={handleSubmit} >
             <TextField onChange={(e) => handleChange(e)}
                        label="new comment"
                        name="content"
                        value={formData.content}
                        placeholder="add comment"
-                       fullWidth required/>
+                       fullWidth required
+                       sx={{marginBottom: '24px'}}/>
             {errors.length > 0 && (
                 <ul style={{color: "red"}}>
                     {errors.map((error) => (
@@ -67,7 +68,7 @@ function NewCommentForm({comments, setComments, user, postcard}) {
                     variant="outlined">
                 Submit
             </Button>
-        </Grid>
+        </Box>
     );
 }
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {Badge, Collapse, Container} from "@mui/material";
+import {Badge, Collapse, Container, List} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -173,7 +173,7 @@ function PostcardShow({currentUser}) {
 
                         <Typography variant="h6" color="text.secondary">Comments</Typography>
 
-                        <ul style={{padding:0, listStyle:"none"}}>
+                        <List style={{padding:0}}>
                             {comments.map((comment) => (
                                 <Comment key={comment.id}
                                          comment={comment}
@@ -182,14 +182,12 @@ function PostcardShow({currentUser}) {
                                          onDeleteComment={handleDelete}
                                          sx={{display:'flex', flexDirection:'row'}}  />
                             ))}
-                        </ul>
+                        </List>
                         <NewCommentForm comments={comments} setComments={setComments} user={currentUser}
                                         postcard={postcard}/>
                     </CardContent>
                 </Collapse>
             </Card>
-
-
         </Container>
     );
 }

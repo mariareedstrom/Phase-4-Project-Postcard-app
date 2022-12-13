@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box} from "@mui/material";
+import {Box, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 
 function formatDate(date) {
     const event = new Date(date)
-    const options = {year: 'numeric', month: 'numeric', day: 'numeric'}
+    const options = {year: 'numeric', month: 'long', day: 'numeric'}
     const locale = document.querySelector('html').lang
 
     return event.toLocaleDateString(locale, options)
@@ -18,29 +18,58 @@ function Comment(props) {
 
 
     return (
-        <Box {...boxProps} >
-            <Avatar src={comment.user.picture} />
-            <Box display="block" flex={1} margin={2}>
-                <Typography >
-                    {comment.user.name}
-                </Typography>
-            <Typography variant={"overline"}>
-                    {formatDate(comment.created_at)}
-            </Typography>
+        <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+                <Avatar src={comment.user.picture}/>
+            </ListItemAvatar>
+            <ListItemText
+                primary={
+                    <Box
+                        display='flex'
+                        alignItems='baseline'
+                        gap='1em'
+                    >
 
-                <Typography>
-                    {comment.content}
-                </Typography>
-            </Box>
+                        <Typography
+                            component="span"
+                            fontWeight={'600'}
+                            color="text.secondary"
+                        >
+                            {comment.user.name}
+                        </Typography>
+
+                        <Typography
+
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                        >
+                            {formatDate(comment.created_at)}
+                        </Typography>
+                    </Box>
+                }
+                secondary={
+
+                        <Typography
+                            sx={{ display: 'inline' }}
+                            component="span"
+                            variant="body2"
+                            color="text.primary"
+                        >
+                            {comment.content}
+                        </Typography>
+
+                }
+            />
             {
                 comment.user.id === currentUser.id ?
-                <IconButton onClick={onDeleteComment(comment.id)} sx={{alignContent: "right"}}>
+                <IconButton onClick={onDeleteComment(comment.id)} sx={{alignItems: "flex-end"}}>
                     <DeleteOutlineIcon color="error" />
                 </IconButton>
                     : null
             }
-        </Box >
-    );
+        </ListItem>
+    )
 }
 
 export default Comment;
