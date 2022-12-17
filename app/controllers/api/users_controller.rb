@@ -1,5 +1,7 @@
 class Api::UsersController < ApplicationController
   skip_before_action :authenticate_user, only: [:create, :show, :index]
+  before_action :set_user, only:[:update, :destroy]
+  before_action :is_authorized, only:[:update, :destroy]
 
   def create
     user = User.create!(user_params)
@@ -33,5 +35,14 @@ class Api::UsersController < ApplicationController
 
   def user_params
     params.permit(:username, :name, :password, :picture)
+  end
+
+  def set_user
+    @user = User.find_by(id: params[:id])
+  end
+
+  def is_authorized
+    permitted = current_user.admin? || current_user.id == @user.id
+    render json: "Action is not permitted", status: :forbidden unless permitted
   end
 end
