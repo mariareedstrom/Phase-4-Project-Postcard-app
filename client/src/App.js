@@ -63,10 +63,6 @@ function App() {
         setPostcards(postcards.filter(({id}) => `${id}` !== postcardId))
     }
 
-    // function handlePostcardUpdate(postcard) {
-    //     const index = postcards.indexOf(postcard);
-    //     const updated =
-    // }
 
     return (
         <>

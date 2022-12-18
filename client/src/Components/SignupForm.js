@@ -43,7 +43,6 @@ function SignupForm({setCurrentUser}) {
     }
 
 
-
     return (
 
         <Box sx={{

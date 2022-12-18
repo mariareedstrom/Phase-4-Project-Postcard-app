@@ -6,7 +6,6 @@ import SendIcon from "@mui/icons-material/Send";
 
 
 function Header({currentUser, handleLogout}) {
-
     const navigate = useNavigate()
 
     function handleSendPostcard() {

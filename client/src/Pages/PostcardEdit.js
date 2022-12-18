@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from "@mui/material/Typography";

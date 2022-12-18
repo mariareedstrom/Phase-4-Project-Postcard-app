@@ -10,7 +10,6 @@ function NewCommentForm({comments, setComments, user, postcard}) {
     })
     const [errors, setErrors] = useState([])
 
-
     function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
@@ -40,7 +39,6 @@ function NewCommentForm({comments, setComments, user, postcard}) {
                 }
             })
     }
-
 
     return (
 
