@@ -14,7 +14,7 @@ function formatDate(date) {
 }
 
 function Comment(props) {
-    const {comment, onDeleteComment, currentUser, ...boxProps} = props;
+    const {comment, onDeleteComment, currentUser} = props;
 
 
     return (
@@ -49,7 +49,6 @@ function Comment(props) {
                     </Box>
                 }
                 secondary={
-
                         <Typography
                             sx={{ display: 'inline' }}
                             component="span"
@@ -58,7 +57,6 @@ function Comment(props) {
                         >
                             {comment.content}
                         </Typography>
-
                 }
             />
             {

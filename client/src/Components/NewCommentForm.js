@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {bottomNavigationActionClasses, Box, Button, Grid, TextField} from "@mui/material";
+import { Box, Button, TextField} from "@mui/material";
 
 
 function NewCommentForm({comments, setComments, user, postcard}) {
