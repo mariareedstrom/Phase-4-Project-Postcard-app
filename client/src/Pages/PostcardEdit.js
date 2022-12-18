@@ -1,23 +1,38 @@
-import React, { useState} from 'react';
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from "@mui/material/Typography";
 import {Button, Paper, TextField} from "@mui/material";
 
-function PostcardEdit() {
+function PostcardEdit({postcards}) {
+    const [postcard, setPostcard] =  useState(null)
     const [errors, setErrors] = useState(null)
-
-    const location = useLocation();
-    const { postcard } = location.state;
-
     const [formData, setFormData] = useState({
-        greeting: postcard.greeting,
-        image_url: postcard.image_url
+        greeting: null,
+        image_url: null
     })
 
+    const postcardId = useParams().id
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (postcards.length > 0) {
+            const card = postcards.find(({id}) => `${id}` === postcardId)
+            if (card) {
+                setPostcard(card)
+            }
+        }
+    }, [postcards, postcardId]);
+
+    useEffect(() => {
+        if (postcard) {
+            setFormData({
+                greeting: postcard.greeting,
+                image_url: postcard.image_url
+            })
+        }
+    }, [postcard]);
 
     function handleChange(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -35,7 +50,12 @@ function PostcardEdit() {
         })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(() => navigate(`/postcards/${postcard.id}`))
+                    res.json()
+                        .then((data) => {
+                            postcard.greeting = data.greeting
+                            postcard.image_url = data.image_url
+                            navigate(`/postcards/${postcard.id}`)
+                        })
                 } else {
                     res.json().then((errorsData) => setErrors(errorsData))
                 }
