@@ -53,6 +53,9 @@ user to delete their own comments.
 ```sh
 rails db:migrate db: seed
 rails server
+```
+4. Open a new tab in the terminal and run:
+```sh
 npm start --prefix client
 ```
 
