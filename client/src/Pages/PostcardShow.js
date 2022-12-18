@@ -30,8 +30,8 @@ const ExpandMore = styled((props) => {
 }));
 
 
-function PostcardShow({currentUser}) {
-    const [postcard, setPostcard] = useState(null)
+function PostcardShow({currentUser, postcards, onPostcardDelete, onFavoriteUpdate, onCommentDelete}) {
+    const [postcard, setPostcard] =  useState(null)
     const [comments, setComments] = useState([]);
     const [isLoaded, setIsLoaded] = useState(null)
     const [expanded, setExpanded] = useState(false);
@@ -41,38 +41,41 @@ function PostcardShow({currentUser}) {
     const postcardId = useParams().id
     const navigate = useNavigate()
 
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
+    useEffect(() => {
+        if (postcards.length > 0) {
+            const card = postcards.find(({id}) => `${id}` === postcardId)
+            if (card) {
+                setPostcard(card)
+                setIsLoaded(true);
+            }
+        }
+    }, [postcards, postcardId]);
 
     useEffect(() => {
-        fetch(`/api/postcards/${postcardId}`)
-            .then((resp) => resp.json())
-            .then((data) => {
-                setPostcard(data);
-                setComments(data.comments);
-                setIsLoaded(true);
-                setFavoriteCount(data.favorites.length);
-                setMyFavorite(data.favorites.find(({user_id}) => user_id === currentUser.id))
-            });
-    }, [postcardId, currentUser.id]);
-
+        if (postcard) {
+            setComments(postcard.comments);
+            setFavoriteCount(postcard.favorites.length);
+            setMyFavorite(postcard.favorites.find(({user_id}) => user_id === currentUser.id))
+        }
+    }, [postcard, currentUser.id])
 
     if (!isLoaded) return <h3>Greetings coming your way....</h3>;
 
     const {image_url, greeting, destination, user} = postcard
 
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
-    function handleDelete(comment_id) {
+    function handleCommentDelete(comment_id) {
         return (_event) => {
             fetch(`/api/comments/${comment_id}`, {
                 method: "DELETE"
             })
                 .then((resp) => {
                     if (resp.status === 204) {
-                        setComments(comments.filter(comment => comment.id !== comment_id))
+                        postcard.comments = comments.filter(({id}) => id !== comment_id)
+                        setComments(postcard.comments)
                     }
                 })
         }
@@ -85,7 +88,8 @@ function PostcardShow({currentUser}) {
             })
                 .then((res) => {
                     if (res.status === 204) {
-                        setFavoriteCount(favoriteCount - 1)
+                        postcard.favorites = postcard.favorites.filter(({id}) => id !== myFavorite.id)
+                        setFavoriteCount(postcard.favorites.length)
                         setMyFavorite(null)
                     }
                 })
@@ -101,8 +105,11 @@ function PostcardShow({currentUser}) {
             })
                 .then((res) => {
                     if (res.ok) {
-                        setFavoriteCount(favoriteCount + 1)
-                        res.json().then((data) => setMyFavorite(data))
+                        res.json().then((data) => {
+                            postcard.favorites.push(data)
+                            setFavoriteCount(postcard.favorites.length)
+                            setMyFavorite(data)
+                        })
                     }
                 })
 
@@ -113,7 +120,10 @@ function PostcardShow({currentUser}) {
         fetch(`/api/postcards/${postcardId}`, {
             method: "DELETE",
         })
-            .then(() => navigate("/"))
+            .then(() => {
+                onPostcardDelete(postcardId)
+                navigate("/")
+            })
     }
 
 
@@ -153,7 +163,6 @@ function PostcardShow({currentUser}) {
                             <IconButton color="error"
                                         component={Link}
                                         to={{pathname: `/postcards/${postcardId}/edit`}}
-                                        state={{postcard}}
                             >
                                 <EditOutlinedIcon/>
                             </IconButton> : null
@@ -179,7 +188,7 @@ function PostcardShow({currentUser}) {
                                          comment={comment}
                                          currentUser={currentUser}
                                          component="li"
-                                         onDeleteComment={handleDelete}
+                                         onDeleteComment={handleCommentDelete}
                                          sx={{display:'flex', flexDirection:'row'}}  />
                             ))}
                         </List>

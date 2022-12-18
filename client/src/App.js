@@ -2,25 +2,27 @@ import './App.css';
 
 import React from "react";
 import {useState, useEffect} from "react";
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import {Routes, Route, useNavigate, useParams} from 'react-router-dom';
 import {Container} from "@mui/material";
 
 import Header from "./Components/Header";
-import LoggedIn from "./Pages/LoggedIn";
-import LoggedOut from "./Pages/LoggedOut";
 import UserShow from "./Pages/UserShow";
 import SignupForm from "./Components/SignupForm";
 import UserEdit from "./Pages/UserEdit";
 import PostcardShow from "./Pages/PostcardShow";
 import NewPostcardForm from "./Components/NewPostcardForm";
 import PostcardEdit from "./Pages/PostcardEdit";
+import PostcardIndex from "./Pages/PostcardIndex";
+import LoginForm from "./Components/LoginForm";
 
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
     const [authenticated, setAuthenticated] = useState(false)
+    const [postcards, setPostcards] = useState([])
 
     const navigate = useNavigate()
+
 
     useEffect(() => {
         fetch('/api/me')
@@ -36,9 +38,19 @@ function App() {
             })
     }, [])
 
+    useEffect(() => {
+        fetch('/api/postcards')
+            .then((res) => res.json())
+            .then((postcards) => {
+                setPostcards(postcards)
+            })
+
+    }, [])
+
     if (!authenticated) {
         return <div></div>
     }
+
 
     function handleLogout() {
         setCurrentUser(null)
@@ -47,6 +59,14 @@ function App() {
 
     }
 
+    function handlePostcardDelete(postcardId) {
+        setPostcards(postcards.filter(({id}) => `${id}` !== postcardId))
+    }
+
+    // function handlePostcardUpdate(postcard) {
+    //     const index = postcards.indexOf(postcard);
+    //     const updated =
+    // }
 
     return (
         <>
@@ -56,23 +76,22 @@ function App() {
                     <Routes>
                         <Route path="/" element=
                             {currentUser ? (
-                                <LoggedIn
-                                    setCurrentUser={setCurrentUser}
-                                    currentUser={currentUser}
-                                />
+                                <PostcardIndex currentUser={currentUser} postcards={postcards}/>
                             ) : (
-                                <LoggedOut
-                                    setCurrentUser={setCurrentUser}
-                                />
+                                <LoginForm setCurrentUser={setCurrentUser}/>
                             )}
                         />
                         <Route path="/users/:id" element={<UserShow currentUser={currentUser}/>}/>
                         <Route path="/signup" element={<SignupForm setCurrentUser={setCurrentUser}/>}/>
                         <Route path="/users/:id/edit"
                                element={<UserEdit currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
-                        <Route path="/postcards/:id" element={<PostcardShow currentUser={currentUser}/>}/>
+                        <Route path="/postcards/:id"
+                               element={<PostcardShow currentUser={currentUser}
+                                                      postcards={postcards}
+                                                      onPostcardDelete={handlePostcardDelete}/>
+                        }/>
+                        <Route path="/postcards/:id/edit" element={<PostcardEdit postcards={postcards}/>} />
                         <Route path="/postcards/new" element={<NewPostcardForm currentUser={currentUser}/>}/>
-                        <Route path="/postcards/:id/edit" element={<PostcardEdit/>} />
                     </Routes>
                 </main>
             </Container>

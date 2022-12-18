@@ -1,20 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import PostCard from "../Components/PostCard";
 import {Box} from "@mui/material";
 
 
-function PostcardIndex({currentUser}) {
-    const [postcards, setPostcards] = useState([])
-
-    useEffect(() => {
-        fetch('/api/postcards')
-            .then((res) => res.json())
-            .then((postcards) => {
-                setPostcards(postcards)
-            })
-
-    }, [])
+function PostcardIndex({currentUser, postcards}) {
 
 
     return (
