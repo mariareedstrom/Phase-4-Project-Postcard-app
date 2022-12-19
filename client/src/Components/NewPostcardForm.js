@@ -5,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
 
-function NewPostcardForm({currentUser}) {
+function NewPostcardForm({currentUser, onPostcardAdd}) {
     const [formData, setFormData] = useState({
         destination_id: null,
         destination_attributes: null,
@@ -72,7 +72,10 @@ function NewPostcardForm({currentUser}) {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                        .then(() => navigate("/"))
+                        .then((cleaned) => {
+                            onPostcardAdd(cleaned)
+                            navigate("/")
+                        })
                 } else
                     res.json().then((errorsData) => {
                         setErrors(errorsData)

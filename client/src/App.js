@@ -63,6 +63,10 @@ function App() {
         setPostcards(postcards.filter(({id}) => `${id}` !== postcardId))
     }
 
+    function handlePostcardAdd(postcard) {
+        setPostcards([...postcards, postcard])
+    }
+
 
     return (
         <>
@@ -87,7 +91,7 @@ function App() {
                                                       onPostcardDelete={handlePostcardDelete}/>
                         }/>
                         <Route path="/postcards/:id/edit" element={<PostcardEdit postcards={postcards}/>} />
-                        <Route path="/postcards/new" element={<NewPostcardForm currentUser={currentUser}/>}/>
+                        <Route path="/postcards/new" element={<NewPostcardForm currentUser={currentUser} onPostcardAdd={handlePostcardAdd}/>}/>
                     </Routes>
                 </main>
             </Container>
