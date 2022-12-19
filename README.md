@@ -56,6 +56,7 @@ rails server
 ```
 4. Open a new tab in the terminal and run:
 ```sh
+npm install --prefix client
 npm start --prefix client
 ```
 
