@@ -30,11 +30,12 @@ const ExpandMore = styled((props) => {
 }));
 
 
-function PostcardShow({currentUser, postcards, onPostcardDelete, onFavoriteUpdate, onCommentDelete}) {
+function PostcardShow({currentUser, postcards, onPostcardDelete, onPostcardUpdate }) {
     const [postcard, setPostcard] =  useState(null)
     const [comments, setComments] = useState([]);
     const [isLoaded, setIsLoaded] = useState(null)
     const [expanded, setExpanded] = useState(false);
+    const [favorites, setFavorites] = useState([]);
     const [favoriteCount, setFavoriteCount] = useState(0)
     const [myFavorite, setMyFavorite] = useState(null)
 
@@ -54,6 +55,7 @@ function PostcardShow({currentUser, postcards, onPostcardDelete, onFavoriteUpdat
     useEffect(() => {
         if (postcard) {
             setComments(postcard.comments);
+            setFavorites(postcard.favorites)
             setFavoriteCount(postcard.favorites.length);
             setMyFavorite(postcard.favorites.find(({user_id}) => user_id === currentUser.id))
         }
@@ -74,8 +76,8 @@ function PostcardShow({currentUser, postcards, onPostcardDelete, onFavoriteUpdat
             })
                 .then((resp) => {
                     if (resp.status === 204) {
-                        postcard.comments = comments.filter(({id}) => id !== comment_id)
-                        setComments(postcard.comments)
+                        const filtered = comments.filter(({id}) => id !== comment_id)
+                        onPostcardUpdate(postcard, {comments: filtered})
                     }
                 })
         }
@@ -88,9 +90,8 @@ function PostcardShow({currentUser, postcards, onPostcardDelete, onFavoriteUpdat
             })
                 .then((res) => {
                     if (res.status === 204) {
-                        postcard.favorites = postcard.favorites.filter(({id}) => id !== myFavorite.id)
-                        setFavoriteCount(postcard.favorites.length)
-                        setMyFavorite(null)
+                        const filtered = favorites.filter(({id}) => id !== myFavorite.id)
+                        onPostcardUpdate(postcard, {favorites: filtered})
                     }
                 })
         } else {
@@ -105,10 +106,8 @@ function PostcardShow({currentUser, postcards, onPostcardDelete, onFavoriteUpdat
             })
                 .then((res) => {
                     if (res.ok) {
-                        res.json().then((data) => {
-                            postcard.favorites.push(data)
-                            setFavoriteCount(postcard.favorites.length)
-                            setMyFavorite(data)
+                        res.json().then((favorite) => {
+                            onPostcardUpdate(postcard, {favorites: [...favorites, favorite]})
                         })
                     }
                 })

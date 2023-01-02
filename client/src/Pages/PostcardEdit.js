@@ -5,7 +5,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from "@mui/material/Typography";
 import {Button, Paper, TextField} from "@mui/material";
 
-function PostcardEdit({postcards}) {
+function PostcardEdit({postcards, onPostcardUpdate}) {
     const [postcard, setPostcard] =  useState(null)
     const [errors, setErrors] = useState(null)
     const [formData, setFormData] = useState({
@@ -52,8 +52,7 @@ function PostcardEdit({postcards}) {
                 if (res.ok) {
                     res.json()
                         .then((data) => {
-                            postcard.greeting = data.greeting
-                            postcard.image_url = data.image_url
+                            onPostcardUpdate(postcard, {greeting: data.greeting, image_url: data.image_url})
                             navigate(`/postcards/${postcard.id}`)
                         })
                 } else {

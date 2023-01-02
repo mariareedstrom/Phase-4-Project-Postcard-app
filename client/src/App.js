@@ -2,7 +2,7 @@ import './App.css';
 
 import React from "react";
 import {useState, useEffect} from "react";
-import {Routes, Route, useNavigate, useParams} from 'react-router-dom';
+import {Routes, Route, useNavigate } from 'react-router-dom';
 import {Container} from "@mui/material";
 
 import Header from "./Components/Header";
@@ -59,6 +59,18 @@ function App() {
 
     }
 
+    function handlePostcardUpdate(postcard, props) {
+        // find postcard
+        const index = postcards.indexOf(postcard)
+        // Update props on postcard
+        const updated = {...postcard, ...props}
+        // create shallow copy of postcards
+        const copyArray = postcards.slice()
+        // replace postcard with updated
+        copyArray.splice(index, 1, updated)
+        setPostcards(copyArray)
+    }
+
     function handlePostcardDelete(postcardId) {
         setPostcards(postcards.filter(({id}) => `${id}` !== postcardId))
     }
@@ -88,9 +100,10 @@ function App() {
                         <Route path="/postcards/:id"
                                element={<PostcardShow currentUser={currentUser}
                                                       postcards={postcards}
+                                                      onPostcardUpdate={handlePostcardUpdate}
                                                       onPostcardDelete={handlePostcardDelete}/>
                         }/>
-                        <Route path="/postcards/:id/edit" element={<PostcardEdit postcards={postcards}/>} />
+                        <Route path="/postcards/:id/edit" element={<PostcardEdit postcards={postcards} onPostcardUpdate={handlePostcardUpdate}/>} />
                         <Route path="/postcards/new" element={<NewPostcardForm currentUser={currentUser} onPostcardAdd={handlePostcardAdd}/>}/>
                     </Routes>
                 </main>
